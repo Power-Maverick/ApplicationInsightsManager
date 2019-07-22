@@ -32,21 +32,30 @@
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbLoadSolutions = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tssSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.gboxSolutionManagement = new System.Windows.Forms.GroupBox();
+            this.txtInstrumentationKey = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnUseExistingWebResource = new System.Windows.Forms.Button();
+            this.btnCreateWebResource = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboxSolutions = new System.Windows.Forms.ComboBox();
             this.gboxCreate = new System.Windows.Forms.GroupBox();
+            this.txtCreateWrDisplayName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.txtCreateWrSchemaName = new System.Windows.Forms.TextBox();
             this.lblCreateSolutionPrefix = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.gboxUseExisting = new System.Windows.Forms.GroupBox();
             this.cmbExistingWebResource = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnUseExistingWebResource = new System.Windows.Forms.Button();
-            this.btnCreateWebResource = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cboxSolutions = new System.Windows.Forms.ComboBox();
             this.dgvForms = new System.Windows.Forms.DataGridView();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.FormId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EntityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FormType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FormName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -58,15 +67,6 @@
             this.colFormName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colWebResourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnApplyPublish = new System.Windows.Forms.Button();
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.FormId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EntityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FormType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FormName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtCreateWrDisplayName = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtInstrumentationKey = new System.Windows.Forms.TextBox();
             this.toolStripMenu.SuspendLayout();
             this.gboxSolutionManagement.SuspendLayout();
             this.gboxCreate.SuspendLayout();
@@ -103,10 +103,10 @@
             this.tsbLoadSolutions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.tsbLoadSolutions.Click += new System.EventHandler(this.TsbLoadSolutions_Click);
             // 
-            // toolStripSeparator1
+            // tssSeparator2
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.tssSeparator2.Name = "tssSeparator2";
+            this.tssSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // toolStripMenu
             // 
@@ -115,7 +115,7 @@
             this.tsbClose,
             this.tssSeparator1,
             this.tsbLoadSolutions,
-            this.toolStripSeparator1});
+            this.tssSeparator2});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1096, 27);
@@ -139,6 +139,63 @@
             this.gboxSolutionManagement.TabIndex = 5;
             this.gboxSolutionManagement.TabStop = false;
             // 
+            // txtInstrumentationKey
+            // 
+            this.txtInstrumentationKey.Location = new System.Drawing.Point(210, 79);
+            this.txtInstrumentationKey.Name = "txtInstrumentationKey";
+            this.txtInstrumentationKey.Size = new System.Drawing.Size(241, 20);
+            this.txtInstrumentationKey.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 82);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(197, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Application Insights Instrumentation Key:";
+            // 
+            // btnUseExistingWebResource
+            // 
+            this.btnUseExistingWebResource.Enabled = false;
+            this.btnUseExistingWebResource.Location = new System.Drawing.Point(241, 46);
+            this.btnUseExistingWebResource.Name = "btnUseExistingWebResource";
+            this.btnUseExistingWebResource.Size = new System.Drawing.Size(210, 23);
+            this.btnUseExistingWebResource.TabIndex = 4;
+            this.btnUseExistingWebResource.Text = "Use Existing App Insights Web Resource";
+            this.btnUseExistingWebResource.UseVisualStyleBackColor = true;
+            this.btnUseExistingWebResource.Click += new System.EventHandler(this.BtnUseExistingWebResource_Click);
+            // 
+            // btnCreateWebResource
+            // 
+            this.btnCreateWebResource.Enabled = false;
+            this.btnCreateWebResource.Location = new System.Drawing.Point(10, 46);
+            this.btnCreateWebResource.Name = "btnCreateWebResource";
+            this.btnCreateWebResource.Size = new System.Drawing.Size(210, 23);
+            this.btnCreateWebResource.TabIndex = 3;
+            this.btnCreateWebResource.Text = "Create App Insights Web Resource";
+            this.btnCreateWebResource.UseVisualStyleBackColor = true;
+            this.btnCreateWebResource.Click += new System.EventHandler(this.BtnCreateWebResource_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(139, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Select your working solution";
+            // 
+            // cboxSolutions
+            // 
+            this.cboxSolutions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSolutions.FormattingEnabled = true;
+            this.cboxSolutions.Location = new System.Drawing.Point(152, 17);
+            this.cboxSolutions.Name = "cboxSolutions";
+            this.cboxSolutions.Size = new System.Drawing.Size(299, 21);
+            this.cboxSolutions.TabIndex = 0;
+            this.cboxSolutions.SelectedIndexChanged += new System.EventHandler(this.CboxSolutions_SelectedIndexChanged);
+            // 
             // gboxCreate
             // 
             this.gboxCreate.Controls.Add(this.txtCreateWrDisplayName);
@@ -153,6 +210,22 @@
             this.gboxCreate.TabStop = false;
             this.gboxCreate.Text = "Create";
             this.gboxCreate.Visible = false;
+            // 
+            // txtCreateWrDisplayName
+            // 
+            this.txtCreateWrDisplayName.Location = new System.Drawing.Point(93, 49);
+            this.txtCreateWrDisplayName.Name = "txtCreateWrDisplayName";
+            this.txtCreateWrDisplayName.Size = new System.Drawing.Size(220, 20);
+            this.txtCreateWrDisplayName.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 52);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Display Name:";
             // 
             // txtCreateWrSchemaName
             // 
@@ -208,47 +281,6 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "Web Resource :";
             // 
-            // btnUseExistingWebResource
-            // 
-            this.btnUseExistingWebResource.Enabled = false;
-            this.btnUseExistingWebResource.Location = new System.Drawing.Point(241, 46);
-            this.btnUseExistingWebResource.Name = "btnUseExistingWebResource";
-            this.btnUseExistingWebResource.Size = new System.Drawing.Size(210, 23);
-            this.btnUseExistingWebResource.TabIndex = 4;
-            this.btnUseExistingWebResource.Text = "Use Existing App Insights Web Resource";
-            this.btnUseExistingWebResource.UseVisualStyleBackColor = true;
-            this.btnUseExistingWebResource.Click += new System.EventHandler(this.BtnUseExistingWebResource_Click);
-            // 
-            // btnCreateWebResource
-            // 
-            this.btnCreateWebResource.Enabled = false;
-            this.btnCreateWebResource.Location = new System.Drawing.Point(10, 46);
-            this.btnCreateWebResource.Name = "btnCreateWebResource";
-            this.btnCreateWebResource.Size = new System.Drawing.Size(210, 23);
-            this.btnCreateWebResource.TabIndex = 3;
-            this.btnCreateWebResource.Text = "Create App Insights Web Resource";
-            this.btnCreateWebResource.UseVisualStyleBackColor = true;
-            this.btnCreateWebResource.Click += new System.EventHandler(this.BtnCreateWebResource_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Select your working solution";
-            // 
-            // cboxSolutions
-            // 
-            this.cboxSolutions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSolutions.FormattingEnabled = true;
-            this.cboxSolutions.Location = new System.Drawing.Point(152, 17);
-            this.cboxSolutions.Name = "cboxSolutions";
-            this.cboxSolutions.Size = new System.Drawing.Size(299, 21);
-            this.cboxSolutions.TabIndex = 0;
-            this.cboxSolutions.SelectedIndexChanged += new System.EventHandler(this.CboxSolutions_SelectedIndexChanged);
-            // 
             // dgvForms
             // 
             this.dgvForms.AllowUserToAddRows = false;
@@ -266,6 +298,39 @@
             this.dgvForms.RowHeadersVisible = false;
             this.dgvForms.Size = new System.Drawing.Size(550, 465);
             this.dgvForms.TabIndex = 6;
+            // 
+            // Select
+            // 
+            this.Select.HeaderText = "Select";
+            this.Select.Name = "Select";
+            this.Select.Width = 50;
+            // 
+            // FormId
+            // 
+            this.FormId.DataPropertyName = "FormId";
+            this.FormId.HeaderText = "FormId";
+            this.FormId.Name = "FormId";
+            this.FormId.Visible = false;
+            // 
+            // EntityName
+            // 
+            this.EntityName.DataPropertyName = "EntityName";
+            this.EntityName.HeaderText = "EntityName";
+            this.EntityName.Name = "EntityName";
+            this.EntityName.Width = 150;
+            // 
+            // FormType
+            // 
+            this.FormType.DataPropertyName = "FormType";
+            this.FormType.HeaderText = "FormType";
+            this.FormType.Name = "FormType";
+            // 
+            // FormName
+            // 
+            this.FormName.DataPropertyName = "FormName";
+            this.FormName.HeaderText = "FormName";
+            this.FormName.Name = "FormName";
+            this.FormName.Width = 200;
             // 
             // label7
             // 
@@ -295,6 +360,7 @@
             // 
             // cboxFilterBy
             // 
+            this.cboxFilterBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxFilterBy.FormattingEnabled = true;
             this.cboxFilterBy.Items.AddRange(new object[] {
             "All",
@@ -370,71 +436,6 @@
             this.btnApplyPublish.UseVisualStyleBackColor = true;
             this.btnApplyPublish.Click += new System.EventHandler(this.BtnApplyPublish_Click);
             // 
-            // Select
-            // 
-            this.Select.HeaderText = "Select";
-            this.Select.Name = "Select";
-            this.Select.Width = 50;
-            // 
-            // FormId
-            // 
-            this.FormId.DataPropertyName = "FormId";
-            this.FormId.HeaderText = "FormId";
-            this.FormId.Name = "FormId";
-            this.FormId.Visible = false;
-            // 
-            // EntityName
-            // 
-            this.EntityName.DataPropertyName = "EntityName";
-            this.EntityName.HeaderText = "EntityName";
-            this.EntityName.Name = "EntityName";
-            this.EntityName.Width = 150;
-            // 
-            // FormType
-            // 
-            this.FormType.DataPropertyName = "FormType";
-            this.FormType.HeaderText = "FormType";
-            this.FormType.Name = "FormType";
-            // 
-            // FormName
-            // 
-            this.FormName.DataPropertyName = "FormName";
-            this.FormName.HeaderText = "FormName";
-            this.FormName.Name = "FormName";
-            this.FormName.Width = 200;
-            // 
-            // txtCreateWrDisplayName
-            // 
-            this.txtCreateWrDisplayName.Location = new System.Drawing.Point(93, 49);
-            this.txtCreateWrDisplayName.Name = "txtCreateWrDisplayName";
-            this.txtCreateWrDisplayName.Size = new System.Drawing.Size(220, 20);
-            this.txtCreateWrDisplayName.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 52);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Display Name:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 82);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(197, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Application Insights Instrumentation Key:";
-            // 
-            // txtInstrumentationKey
-            // 
-            this.txtInstrumentationKey.Location = new System.Drawing.Point(210, 79);
-            this.txtInstrumentationKey.Name = "txtInstrumentationKey";
-            this.txtInstrumentationKey.Size = new System.Drawing.Size(241, 20);
-            this.txtInstrumentationKey.TabIndex = 8;
-            // 
             // MainPluginControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -468,7 +469,7 @@
         private System.Windows.Forms.ToolStripButton tsbClose;
         private System.Windows.Forms.ToolStripSeparator tssSeparator1;
         private System.Windows.Forms.ToolStripButton tsbLoadSolutions;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator tssSeparator2;
         private System.Windows.Forms.ToolStrip toolStripMenu;
         private System.Windows.Forms.GroupBox gboxSolutionManagement;
         private System.Windows.Forms.Label label1;

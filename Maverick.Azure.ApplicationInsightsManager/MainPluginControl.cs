@@ -14,13 +14,12 @@ using McTools.Xrm.Connection;
 using XrmToolBox.Extensibility.Interfaces;
 using Maverick.Azure.ApplicationInsightsManager.Helper;
 using Microsoft.Xrm.Sdk.Metadata;
-using Maverick.Azure.ApplicationInsightsManager.SealedClasses;
 using System.Collections.ObjectModel;
 using Microsoft.Xrm.Sdk.Messages;
 
 namespace Maverick.Azure.ApplicationInsightsManager
 {
-    public partial class MainPluginControl : PluginControlBase, IGitHubPlugin, IHelpPlugin
+    public partial class MainPluginControl : PluginControlBase, IGitHubPlugin, IHelpPlugin, IPayPalPlugin
     {
         #region Enums
         private enum WebResourceOption
@@ -38,10 +37,12 @@ namespace Maverick.Azure.ApplicationInsightsManager
         #endregion
 
         #region Public Variables
-        public string RepositoryName => "";
+        public string RepositoryName => "ApplicationInsightsManager";
         public string UserName => "Danz-maveRICK";
-        public string HelpUrl => "";
-        public string RepositoryUrl => "https://github.com/Danz-maveRICK/PCF-CustomControlBuilder/";
+        public string HelpUrl => "https://github.com/Danz-maveRICK/ApplicationInsightsManager/blob/master/README.md";
+        public string RepositoryUrl => "https://github.com/Danz-maveRICK/ApplicationInsightsManager";
+        public string DonationDescription => "Keeps the ball rolling and motivates in making awesome tools.";
+        public string EmailAccount => "danz@techgeek.co.in";
         #endregion
 
         #region Cache Variables
@@ -178,7 +179,6 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     // Add web resource to checked rows
                     foreach (var row in checkedRows)
                     {
-                        //TODO
                         var formId = (Guid)row.Cells["FormId"].Value;
                         var formEntity = _formsCache.FirstOrDefault(f => f.Id == formId);
 
@@ -349,18 +349,26 @@ namespace Maverick.Azure.ApplicationInsightsManager
 
         private void CboxFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (cboxFilterBy.SelectedIndex)
+            if (_formsDataGridViewCache != null)
             {
-                case 0:
-                    bindingSource.DataSource = _formsDataGridViewCache.Where(a => a.FormType.ToLower().Contains("main"));
-                    dgvForms.DataSource = bindingSource;
-                    break;
-                case 1:
-                    bindingSource.DataSource = _formsDataGridViewCache.Where(a => a.FormType.ToLower().Contains("quick create"));
-                    dgvForms.DataSource = bindingSource;
-                    break;
-                default:
-                    break;
+                switch (cboxFilterBy.SelectedIndex)
+                {
+                    case 0:
+                        bindingSource.DataSource = _formsDataGridViewCache;
+                        dgvForms.DataSource = bindingSource;
+                        break;
+                    case 1:
+                        bindingSource.DataSource = _formsDataGridViewCache.Where(a => a.FormType.ToLower().Contains("main"));
+                        dgvForms.DataSource = bindingSource;
+                        break;
+                    case 2:
+                        bindingSource.DataSource = _formsDataGridViewCache.Where(a => a.FormType.ToLower().Contains("quick create"));
+                        dgvForms.DataSource = bindingSource;
+                        break;
+                    default:
+                        break;
+                }
+
             }
         }
 

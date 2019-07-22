@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maverick.Azure.ApplicationInsightsManager.SealedClasses
+namespace Maverick.Azure.ApplicationInsightsManager
 {
     public sealed class DataGridViewListItem
     {
