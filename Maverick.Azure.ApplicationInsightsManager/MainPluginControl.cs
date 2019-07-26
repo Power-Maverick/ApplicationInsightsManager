@@ -40,7 +40,6 @@ namespace Maverick.Azure.ApplicationInsightsManager
         public string RepositoryName => "ApplicationInsightsManager";
         public string UserName => "Danz-maveRICK";
         public string HelpUrl => "https://github.com/Danz-maveRICK/ApplicationInsightsManager/blob/master/README.md";
-        public string RepositoryUrl => "https://github.com/Danz-maveRICK/ApplicationInsightsManager";
         public string DonationDescription => "Keeps the ball rolling and motivates in making awesome tools.";
         public string EmailAccount => "danz@techgeek.co.in";
         #endregion
@@ -50,6 +49,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
         private EntityCollection _solutionsCache;
         private List<Entity> _formsCache;
         private List<DataGridViewListItem> _formsDataGridViewCache;
+        private List<Entity> _existingWebResourcesCache;
 
         #endregion
 
@@ -123,9 +123,12 @@ namespace Maverick.Azure.ApplicationInsightsManager
                                                 FormId = entity.Id,
                                                 FormName = entity.GetAttributeValue<string>("name"),
                                                 FormType = entity.FormattedValues["type"],
-                                                EntityName = entity.FormattedValues["objecttypecode"]
+                                                EntityName = entity.FormattedValues["objecttypecode"],
+                                                doesAiExists = entity.GetAttributeValue<string>("formxml").Contains("D365AppInsights.startLogging")
                                             });
-                        _formsDataGridViewCache = formListQuery.OrderBy(o => o.EntityName).ToList();
+                        _formsDataGridViewCache = formListQuery
+                                                    .OrderBy(o => o.EntityName)
+                                                    .ToList();
 
                         bindingSource.DataSource = _formsDataGridViewCache;
                         dgvForms.DataSource = bindingSource;
@@ -144,7 +147,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     ComboListItem selectedSolution = (ComboListItem)cboxSolutions.SelectedItem;
                     var solutionUniqueName = selectedSolution.MetaData.GetAttributeValue<string>("uniquename");
 
-                    e.Result = MetadataHelper.CreateWebResource(Service, solutionUniqueName, txtCreateWrDisplayName.Text, txtCreateWrSchemaName.Text, lblCreateSolutionPrefix.Text, txtInstrumentationKey.Text, RepositoryUrl);
+                    e.Result = MetadataHelper.CreateWebResource(Service, solutionUniqueName, txtCreateWrDisplayName.Text, txtCreateWrSchemaName.Text, lblCreateSolutionPrefix.Text, txtInstrumentationKey.Text);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -176,6 +179,16 @@ namespace Maverick.Azure.ApplicationInsightsManager
                                       where Convert.ToBoolean(r.Cells[0].Value) == true
                                       select r;
 
+                    AppInsightsConfigs config = new AppInsightsConfigs();
+                    config.disablePageviewTracking = cboxPageView.Checked;
+                    config.disablePageLoadTimeTracking = cboxPageLoad.Checked;
+                    config.disableExceptionTracking = cboxException.Checked;
+                    config.disableAjaxTracking = cboxAjax.Checked;
+                    config.disableTraceTracking = cboxTrace.Checked;
+                    config.disableMetricTracking = cboxMetrics.Checked;
+                    config.disableDependencyTracking = cboxDependency.Checked;
+                    config.disableEventTracking = cboxEvents.Checked;
+
                     // Add web resource to checked rows
                     foreach (var row in checkedRows)
                     {
@@ -184,7 +197,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
 
                         var formXml = formEntity.GetAttributeValue<string>("formxml");
 
-                        MetadataHelper.AddJavascriptLibraryToForm(Service, formId, formXml, txtCreateWrSchemaName.Text, lblCreateSolutionPrefix.Text);
+                        MetadataHelper.AddJavascriptLibraryToForm(Service, formId, formXml, txtCreateWrSchemaName.Text, lblCreateSolutionPrefix.Text, config);
                     }
                 },
                 PostWorkCallBack = (args) =>
@@ -218,7 +231,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     }
                     else
                     {
-
+                        RefreshDataGridView();
                     }
                 }
             });
@@ -235,15 +248,71 @@ namespace Maverick.Azure.ApplicationInsightsManager
                             && !string.IsNullOrEmpty(txtCreateWrSchemaName.Text)
                             && !string.IsNullOrEmpty(txtInstrumentationKey.Text));
 
+                //TODO - check if atleast one form is checked
+
             }
             else if (selection == WebResourceOption.UseExisting)
             {
                 // Required data is populated
                 isValid = (cmbExistingWebResource.SelectedIndex != -1
                             && !string.IsNullOrEmpty(txtInstrumentationKey.Text));
+
+                //TODO - check if atleast one form is checked
             }
 
             return isValid;
+        }
+
+        private void LoadAppInsightsWebResources()
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Loading existing Web Resources...",
+                Work = (w, e) =>
+                {
+                    e.Result = MetadataHelper.GetWebResources(Service);
+                },
+                PostWorkCallBack = (args) =>
+                {
+                    if (args.Error != null)
+                    {
+                        MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        _existingWebResourcesCache = (List<Entity>)args.Result;
+
+                        var wrQuery = from entity in _existingWebResourcesCache
+                                      select (new ExistingWebResource()
+                                      {
+                                          WebResourceId = entity.Id,
+                                          Name = entity.GetAttributeValue<string>("name"),
+                                          DisplayName = entity.GetAttributeValue<string>("displayname"),
+                                          Contents = FileHelper.GetDecodedFileContents(entity.GetAttributeValue<string>("content"))
+                                      });
+
+                        var filteredWebResourceList = wrQuery.Where(wr => wr.Contents.Contains("window.appInsights.config.instrumentationKey") && wr.Contents.Contains("(function (D365AppInsights)")).ToList();
+
+                        cmbExistingWebResource.DisplayMember = "DisplayName";
+                        cmbExistingWebResource.DataSource = filteredWebResourceList;
+                    }
+                }
+            });
+        }
+
+        private void RefreshDataGridView()
+        {
+            var dgvRows = dgvForms.Rows;
+
+            foreach (DataGridViewRow row in dgvRows)
+            {
+                if (bool.Parse(row.Cells["AppInsightsExists"].Value.ToString()))
+                {
+                    row.Cells["Select"].ReadOnly = true;
+                    row.ReadOnly = true;
+                    row.DefaultCellStyle.BackColor = Color.Gray;
+                }
+            }
         }
 
         #endregion
@@ -321,6 +390,8 @@ namespace Maverick.Azure.ApplicationInsightsManager
             gboxCreate.Visible = true;
             gboxUseExisting.Visible = false;
             pnlEntitiesSelection.Visible = true;
+            lblInstrumentationKey.Visible = true;
+            txtInstrumentationKey.Visible = true;
             selection = WebResourceOption.Create;
 
             ExecuteMethod(LoadForms);
@@ -331,11 +402,12 @@ namespace Maverick.Azure.ApplicationInsightsManager
             gboxCreate.Visible = false;
             gboxUseExisting.Visible = true;
             pnlEntitiesSelection.Visible = true;
+            lblInstrumentationKey.Visible = false;
+            txtInstrumentationKey.Visible = false;
             selection = WebResourceOption.Create;
 
-            //TODO - populate the existing web resource list
-
             ExecuteMethod(LoadForms);
+            ExecuteMethod(LoadAppInsightsWebResources);
         }
 
         private void TxtSearch_TextChanged(object sender, EventArgs e)
@@ -365,10 +437,18 @@ namespace Maverick.Azure.ApplicationInsightsManager
                         bindingSource.DataSource = _formsDataGridViewCache.Where(a => a.FormType.ToLower().Contains("quick create"));
                         dgvForms.DataSource = bindingSource;
                         break;
+                    case 3:
+                        bindingSource.DataSource = _formsDataGridViewCache.Where(a => !(a.doesAiExists));
+                        dgvForms.DataSource = bindingSource;
+                        break;
+                    case 4:
+                        bindingSource.DataSource = _formsDataGridViewCache.Where(a => a.doesAiExists);
+                        dgvForms.DataSource = bindingSource;
+                        break;
                     default:
                         break;
                 }
-
+                RefreshDataGridView();
             }
         }
 
@@ -380,16 +460,34 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 {
                     // Create a Web Resource and add it to the solution
                     ExecuteMethod(CreateAndAddWebResourceToForms);
-
                 }
                 else if (selection == WebResourceOption.UseExisting)
                 {
-
+                    // Create a Web Resource and add it to the solution
+                    ExecuteMethod(AddWebResourceToForms);
                 }
             }
             else
             {
                 MessageBox.Show("Please populated the required data/components", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DgvForms_DataSourceChanged(object sender, EventArgs e)
+        {
+            RefreshDataGridView();
+        }
+
+        private void LinklblSelectAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var dgvRows = dgvForms.Rows;
+
+            foreach (DataGridViewRow row in dgvRows)
+            {
+                if (!bool.Parse(row.Cells["AppInsightsExists"].Value.ToString()))
+                {
+                    row.Cells["Select"].Value = true;
+                }
             }
         }
     }

@@ -36,7 +36,7 @@
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.gboxSolutionManagement = new System.Windows.Forms.GroupBox();
             this.txtInstrumentationKey = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblInstrumentationKey = new System.Windows.Forms.Label();
             this.btnUseExistingWebResource = new System.Windows.Forms.Button();
             this.btnCreateWebResource = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,29 +51,35 @@
             this.cmbExistingWebResource = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvForms = new System.Windows.Forms.DataGridView();
-            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.FormId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EntityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FormType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FormName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cboxFilterBy = new System.Windows.Forms.ComboBox();
             this.pnlEntitiesSelection = new System.Windows.Forms.Panel();
-            this.gboxExistingAppInsights = new System.Windows.Forms.GroupBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.colEntity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colFormName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colWebResourceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnApplyPublish = new System.Windows.Forms.Button();
+            this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.FormId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EntityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FormType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FormName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AppInsightsExists = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.gboxConfigs = new System.Windows.Forms.GroupBox();
+            this.cboxPageView = new System.Windows.Forms.CheckBox();
+            this.cboxPageLoad = new System.Windows.Forms.CheckBox();
+            this.cboxException = new System.Windows.Forms.CheckBox();
+            this.cboxAjax = new System.Windows.Forms.CheckBox();
+            this.cboxTrace = new System.Windows.Forms.CheckBox();
+            this.cboxMetrics = new System.Windows.Forms.CheckBox();
+            this.cboxDependency = new System.Windows.Forms.CheckBox();
+            this.cboxEvents = new System.Windows.Forms.CheckBox();
+            this.linklblSelectAll = new System.Windows.Forms.LinkLabel();
             this.toolStripMenu.SuspendLayout();
             this.gboxSolutionManagement.SuspendLayout();
             this.gboxCreate.SuspendLayout();
             this.gboxUseExisting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvForms)).BeginInit();
             this.pnlEntitiesSelection.SuspendLayout();
-            this.gboxExistingAppInsights.SuspendLayout();
+            this.gboxConfigs.SuspendLayout();
             this.SuspendLayout();
             // 
             // tsbClose
@@ -118,7 +124,7 @@
             this.tssSeparator2});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
-            this.toolStripMenu.Size = new System.Drawing.Size(1096, 27);
+            this.toolStripMenu.Size = new System.Drawing.Size(1068, 27);
             this.toolStripMenu.Stretch = true;
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
@@ -126,16 +132,16 @@
             // gboxSolutionManagement
             // 
             this.gboxSolutionManagement.Controls.Add(this.txtInstrumentationKey);
-            this.gboxSolutionManagement.Controls.Add(this.label2);
+            this.gboxSolutionManagement.Controls.Add(this.lblInstrumentationKey);
             this.gboxSolutionManagement.Controls.Add(this.btnUseExistingWebResource);
             this.gboxSolutionManagement.Controls.Add(this.btnCreateWebResource);
             this.gboxSolutionManagement.Controls.Add(this.label1);
             this.gboxSolutionManagement.Controls.Add(this.cboxSolutions);
-            this.gboxSolutionManagement.Controls.Add(this.gboxCreate);
             this.gboxSolutionManagement.Controls.Add(this.gboxUseExisting);
+            this.gboxSolutionManagement.Controls.Add(this.gboxCreate);
             this.gboxSolutionManagement.Location = new System.Drawing.Point(3, 30);
             this.gboxSolutionManagement.Name = "gboxSolutionManagement";
-            this.gboxSolutionManagement.Size = new System.Drawing.Size(1090, 109);
+            this.gboxSolutionManagement.Size = new System.Drawing.Size(827, 109);
             this.gboxSolutionManagement.TabIndex = 5;
             this.gboxSolutionManagement.TabStop = false;
             // 
@@ -146,14 +152,14 @@
             this.txtInstrumentationKey.Size = new System.Drawing.Size(241, 20);
             this.txtInstrumentationKey.TabIndex = 8;
             // 
-            // label2
+            // lblInstrumentationKey
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 82);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(197, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Application Insights Instrumentation Key:";
+            this.lblInstrumentationKey.AutoSize = true;
+            this.lblInstrumentationKey.Location = new System.Drawing.Point(7, 82);
+            this.lblInstrumentationKey.Name = "lblInstrumentationKey";
+            this.lblInstrumentationKey.Size = new System.Drawing.Size(197, 13);
+            this.lblInstrumentationKey.TabIndex = 7;
+            this.lblInstrumentationKey.Text = "Application Insights Instrumentation Key:";
             // 
             // btnUseExistingWebResource
             // 
@@ -205,7 +211,7 @@
             this.gboxCreate.Controls.Add(this.label5);
             this.gboxCreate.Location = new System.Drawing.Point(478, 17);
             this.gboxCreate.Name = "gboxCreate";
-            this.gboxCreate.Size = new System.Drawing.Size(441, 82);
+            this.gboxCreate.Size = new System.Drawing.Size(334, 82);
             this.gboxCreate.TabIndex = 5;
             this.gboxCreate.TabStop = false;
             this.gboxCreate.Text = "Create";
@@ -257,7 +263,7 @@
             this.gboxUseExisting.Controls.Add(this.label6);
             this.gboxUseExisting.Location = new System.Drawing.Point(478, 17);
             this.gboxUseExisting.Name = "gboxUseExisting";
-            this.gboxUseExisting.Size = new System.Drawing.Size(441, 82);
+            this.gboxUseExisting.Size = new System.Drawing.Size(334, 82);
             this.gboxUseExisting.TabIndex = 6;
             this.gboxUseExisting.TabStop = false;
             this.gboxUseExisting.Text = "Use Existing";
@@ -269,7 +275,7 @@
             this.cmbExistingWebResource.FormattingEnabled = true;
             this.cmbExistingWebResource.Location = new System.Drawing.Point(97, 31);
             this.cmbExistingWebResource.Name = "cmbExistingWebResource";
-            this.cmbExistingWebResource.Size = new System.Drawing.Size(338, 21);
+            this.cmbExistingWebResource.Size = new System.Drawing.Size(231, 21);
             this.cmbExistingWebResource.TabIndex = 2;
             // 
             // label6
@@ -292,12 +298,87 @@
             this.FormId,
             this.EntityName,
             this.FormType,
-            this.FormName});
-            this.dgvForms.Location = new System.Drawing.Point(7, 34);
+            this.FormName,
+            this.AppInsightsExists});
+            this.dgvForms.Location = new System.Drawing.Point(7, 57);
             this.dgvForms.Name = "dgvForms";
             this.dgvForms.RowHeadersVisible = false;
-            this.dgvForms.Size = new System.Drawing.Size(550, 465);
+            this.dgvForms.Size = new System.Drawing.Size(629, 442);
             this.dgvForms.TabIndex = 6;
+            this.dgvForms.DataSourceChanged += new System.EventHandler(this.DgvForms_DataSourceChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 10);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Search:";
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(57, 7);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(304, 20);
+            this.txtSearch.TabIndex = 8;
+            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(446, 10);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Filter By:";
+            // 
+            // cboxFilterBy
+            // 
+            this.cboxFilterBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxFilterBy.FormattingEnabled = true;
+            this.cboxFilterBy.Items.AddRange(new object[] {
+            "All",
+            "Form Type - Main",
+            "Form Type - Quick Create",
+            "AppInsights Does Not Exists",
+            "AppInsights Exsits"});
+            this.cboxFilterBy.Location = new System.Drawing.Point(499, 7);
+            this.cboxFilterBy.Name = "cboxFilterBy";
+            this.cboxFilterBy.Size = new System.Drawing.Size(137, 21);
+            this.cboxFilterBy.TabIndex = 10;
+            this.cboxFilterBy.SelectedIndexChanged += new System.EventHandler(this.CboxFilterBy_SelectedIndexChanged);
+            // 
+            // pnlEntitiesSelection
+            // 
+            this.pnlEntitiesSelection.Controls.Add(this.linklblSelectAll);
+            this.pnlEntitiesSelection.Controls.Add(this.gboxConfigs);
+            this.pnlEntitiesSelection.Controls.Add(this.btnApplyPublish);
+            this.pnlEntitiesSelection.Controls.Add(this.dgvForms);
+            this.pnlEntitiesSelection.Controls.Add(this.cboxFilterBy);
+            this.pnlEntitiesSelection.Controls.Add(this.label7);
+            this.pnlEntitiesSelection.Controls.Add(this.label8);
+            this.pnlEntitiesSelection.Controls.Add(this.txtSearch);
+            this.pnlEntitiesSelection.Location = new System.Drawing.Point(3, 145);
+            this.pnlEntitiesSelection.Name = "pnlEntitiesSelection";
+            this.pnlEntitiesSelection.Size = new System.Drawing.Size(827, 647);
+            this.pnlEntitiesSelection.TabIndex = 11;
+            this.pnlEntitiesSelection.Visible = false;
+            // 
+            // btnApplyPublish
+            // 
+            this.btnApplyPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApplyPublish.Image = ((System.Drawing.Image)(resources.GetObject("btnApplyPublish.Image")));
+            this.btnApplyPublish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApplyPublish.Location = new System.Drawing.Point(7, 600);
+            this.btnApplyPublish.Name = "btnApplyPublish";
+            this.btnApplyPublish.Size = new System.Drawing.Size(151, 44);
+            this.btnApplyPublish.TabIndex = 11;
+            this.btnApplyPublish.Text = "Apply & Publish";
+            this.btnApplyPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnApplyPublish.UseMnemonic = false;
+            this.btnApplyPublish.UseVisualStyleBackColor = true;
+            this.btnApplyPublish.Click += new System.EventHandler(this.BtnApplyPublish_Click);
             // 
             // Select
             // 
@@ -332,109 +413,122 @@
             this.FormName.Name = "FormName";
             this.FormName.Width = 200;
             // 
-            // label7
+            // AppInsightsExists
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Search:";
+            this.AppInsightsExists.DataPropertyName = "doesAiExists";
+            this.AppInsightsExists.HeaderText = "AppInsightsExists";
+            this.AppInsightsExists.Name = "AppInsightsExists";
+            this.AppInsightsExists.ReadOnly = true;
             // 
-            // txtSearch
+            // gboxConfigs
             // 
-            this.txtSearch.Location = new System.Drawing.Point(57, 7);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(304, 20);
-            this.txtSearch.TabIndex = 8;
-            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
+            this.gboxConfigs.Controls.Add(this.cboxEvents);
+            this.gboxConfigs.Controls.Add(this.cboxDependency);
+            this.gboxConfigs.Controls.Add(this.cboxMetrics);
+            this.gboxConfigs.Controls.Add(this.cboxTrace);
+            this.gboxConfigs.Controls.Add(this.cboxAjax);
+            this.gboxConfigs.Controls.Add(this.cboxException);
+            this.gboxConfigs.Controls.Add(this.cboxPageLoad);
+            this.gboxConfigs.Controls.Add(this.cboxPageView);
+            this.gboxConfigs.Location = new System.Drawing.Point(7, 505);
+            this.gboxConfigs.Name = "gboxConfigs";
+            this.gboxConfigs.Size = new System.Drawing.Size(629, 90);
+            this.gboxConfigs.TabIndex = 12;
+            this.gboxConfigs.TabStop = false;
+            this.gboxConfigs.Text = "Configurations";
             // 
-            // label8
+            // cboxPageView
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(367, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 13);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Filter By:";
+            this.cboxPageView.AutoSize = true;
+            this.cboxPageView.Location = new System.Drawing.Point(7, 20);
+            this.cboxPageView.Name = "cboxPageView";
+            this.cboxPageView.Size = new System.Drawing.Size(157, 17);
+            this.cboxPageView.TabIndex = 0;
+            this.cboxPageView.Text = "Disable PageView Tracking";
+            this.cboxPageView.UseVisualStyleBackColor = true;
             // 
-            // cboxFilterBy
+            // cboxPageLoad
             // 
-            this.cboxFilterBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxFilterBy.FormattingEnabled = true;
-            this.cboxFilterBy.Items.AddRange(new object[] {
-            "All",
-            "Form Type - Main",
-            "Form Type - Quick Create"});
-            this.cboxFilterBy.Location = new System.Drawing.Point(420, 7);
-            this.cboxFilterBy.Name = "cboxFilterBy";
-            this.cboxFilterBy.Size = new System.Drawing.Size(137, 21);
-            this.cboxFilterBy.TabIndex = 10;
-            this.cboxFilterBy.SelectedIndexChanged += new System.EventHandler(this.CboxFilterBy_SelectedIndexChanged);
+            this.cboxPageLoad.AutoSize = true;
+            this.cboxPageLoad.Location = new System.Drawing.Point(7, 43);
+            this.cboxPageLoad.Name = "cboxPageLoad";
+            this.cboxPageLoad.Size = new System.Drawing.Size(158, 17);
+            this.cboxPageLoad.TabIndex = 1;
+            this.cboxPageLoad.Text = "Disable PageLoad Tracking";
+            this.cboxPageLoad.UseVisualStyleBackColor = true;
             // 
-            // pnlEntitiesSelection
+            // cboxException
             // 
-            this.pnlEntitiesSelection.Controls.Add(this.gboxExistingAppInsights);
-            this.pnlEntitiesSelection.Controls.Add(this.btnApplyPublish);
-            this.pnlEntitiesSelection.Controls.Add(this.dgvForms);
-            this.pnlEntitiesSelection.Controls.Add(this.cboxFilterBy);
-            this.pnlEntitiesSelection.Controls.Add(this.label7);
-            this.pnlEntitiesSelection.Controls.Add(this.label8);
-            this.pnlEntitiesSelection.Controls.Add(this.txtSearch);
-            this.pnlEntitiesSelection.Location = new System.Drawing.Point(3, 145);
-            this.pnlEntitiesSelection.Name = "pnlEntitiesSelection";
-            this.pnlEntitiesSelection.Size = new System.Drawing.Size(1090, 571);
-            this.pnlEntitiesSelection.TabIndex = 11;
-            this.pnlEntitiesSelection.Visible = false;
+            this.cboxException.AutoSize = true;
+            this.cboxException.Location = new System.Drawing.Point(7, 66);
+            this.cboxException.Name = "cboxException";
+            this.cboxException.Size = new System.Drawing.Size(156, 17);
+            this.cboxException.TabIndex = 2;
+            this.cboxException.Text = "Disable Exception Tracking";
+            this.cboxException.UseVisualStyleBackColor = true;
             // 
-            // gboxExistingAppInsights
+            // cboxAjax
             // 
-            this.gboxExistingAppInsights.Controls.Add(this.listView1);
-            this.gboxExistingAppInsights.Location = new System.Drawing.Point(586, 10);
-            this.gboxExistingAppInsights.Name = "gboxExistingAppInsights";
-            this.gboxExistingAppInsights.Size = new System.Drawing.Size(501, 533);
-            this.gboxExistingAppInsights.TabIndex = 12;
-            this.gboxExistingAppInsights.TabStop = false;
-            this.gboxExistingAppInsights.Text = "App Insights Web Resource Exists";
+            this.cboxAjax.AutoSize = true;
+            this.cboxAjax.Checked = true;
+            this.cboxAjax.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cboxAjax.Location = new System.Drawing.Point(170, 20);
+            this.cboxAjax.Name = "cboxAjax";
+            this.cboxAjax.Size = new System.Drawing.Size(129, 17);
+            this.cboxAjax.TabIndex = 3;
+            this.cboxAjax.Text = "Disable Ajax Tracking";
+            this.cboxAjax.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // cboxTrace
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colEntity,
-            this.colFormName,
-            this.colWebResourceName});
-            this.listView1.Location = new System.Drawing.Point(6, 24);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(489, 465);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.cboxTrace.AutoSize = true;
+            this.cboxTrace.Location = new System.Drawing.Point(170, 43);
+            this.cboxTrace.Name = "cboxTrace";
+            this.cboxTrace.Size = new System.Drawing.Size(137, 17);
+            this.cboxTrace.TabIndex = 4;
+            this.cboxTrace.Text = "Disable Trace Tracking";
+            this.cboxTrace.UseVisualStyleBackColor = true;
             // 
-            // colEntity
+            // cboxMetrics
             // 
-            this.colEntity.Text = "Entity";
+            this.cboxMetrics.AutoSize = true;
+            this.cboxMetrics.Location = new System.Drawing.Point(170, 66);
+            this.cboxMetrics.Name = "cboxMetrics";
+            this.cboxMetrics.Size = new System.Drawing.Size(143, 17);
+            this.cboxMetrics.TabIndex = 5;
+            this.cboxMetrics.Text = "Disable Metrics Tracking";
+            this.cboxMetrics.UseVisualStyleBackColor = true;
             // 
-            // colFormName
+            // cboxDependency
             // 
-            this.colFormName.Text = "Form Name";
+            this.cboxDependency.AutoSize = true;
+            this.cboxDependency.Location = new System.Drawing.Point(316, 20);
+            this.cboxDependency.Name = "cboxDependency";
+            this.cboxDependency.Size = new System.Drawing.Size(170, 17);
+            this.cboxDependency.TabIndex = 6;
+            this.cboxDependency.Text = "Disable Dependency Tracking";
+            this.cboxDependency.UseVisualStyleBackColor = true;
             // 
-            // colWebResourceName
+            // cboxEvents
             // 
-            this.colWebResourceName.Text = "Web Resource Name";
+            this.cboxEvents.AutoSize = true;
+            this.cboxEvents.Location = new System.Drawing.Point(316, 43);
+            this.cboxEvents.Name = "cboxEvents";
+            this.cboxEvents.Size = new System.Drawing.Size(137, 17);
+            this.cboxEvents.TabIndex = 7;
+            this.cboxEvents.Text = "Disable Event Tracking";
+            this.cboxEvents.UseVisualStyleBackColor = true;
             // 
-            // btnApplyPublish
+            // linklblSelectAll
             // 
-            this.btnApplyPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApplyPublish.Image = ((System.Drawing.Image)(resources.GetObject("btnApplyPublish.Image")));
-            this.btnApplyPublish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApplyPublish.Location = new System.Drawing.Point(7, 520);
-            this.btnApplyPublish.Name = "btnApplyPublish";
-            this.btnApplyPublish.Size = new System.Drawing.Size(151, 44);
-            this.btnApplyPublish.TabIndex = 11;
-            this.btnApplyPublish.Text = "Apply & Publish";
-            this.btnApplyPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnApplyPublish.UseMnemonic = false;
-            this.btnApplyPublish.UseVisualStyleBackColor = true;
-            this.btnApplyPublish.Click += new System.EventHandler(this.BtnApplyPublish_Click);
+            this.linklblSelectAll.AutoSize = true;
+            this.linklblSelectAll.Location = new System.Drawing.Point(7, 38);
+            this.linklblSelectAll.Name = "linklblSelectAll";
+            this.linklblSelectAll.Size = new System.Drawing.Size(197, 13);
+            this.linklblSelectAll.TabIndex = 13;
+            this.linklblSelectAll.TabStop = true;
+            this.linklblSelectAll.Text = "Select All (except where AI Script Exists)";
+            this.linklblSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblSelectAll_LinkClicked);
             // 
             // MainPluginControl
             // 
@@ -444,7 +538,7 @@
             this.Controls.Add(this.gboxSolutionManagement);
             this.Controls.Add(this.toolStripMenu);
             this.Name = "MainPluginControl";
-            this.Size = new System.Drawing.Size(1096, 719);
+            this.Size = new System.Drawing.Size(1068, 795);
             this.OnCloseTool += new System.EventHandler(this.MainPluginControl_OnCloseTool);
             this.Load += new System.EventHandler(this.MainPluginControl_Load);
             this.toolStripMenu.ResumeLayout(false);
@@ -458,7 +552,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvForms)).EndInit();
             this.pnlEntitiesSelection.ResumeLayout(false);
             this.pnlEntitiesSelection.PerformLayout();
-            this.gboxExistingAppInsights.ResumeLayout(false);
+            this.gboxConfigs.ResumeLayout(false);
+            this.gboxConfigs.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -489,20 +584,26 @@
         private System.Windows.Forms.ComboBox cboxFilterBy;
         private System.Windows.Forms.Panel pnlEntitiesSelection;
         private System.Windows.Forms.Button btnApplyPublish;
-        private System.Windows.Forms.GroupBox gboxExistingAppInsights;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader colEntity;
-        private System.Windows.Forms.ColumnHeader colFormName;
-        private System.Windows.Forms.ColumnHeader colWebResourceName;
+        private System.Windows.Forms.DataGridView dgvForms;
+        private System.Windows.Forms.TextBox txtCreateWrDisplayName;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtInstrumentationKey;
+        private System.Windows.Forms.Label lblInstrumentationKey;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Select;
         private System.Windows.Forms.DataGridViewTextBoxColumn FormId;
         private System.Windows.Forms.DataGridViewTextBoxColumn EntityName;
         private System.Windows.Forms.DataGridViewTextBoxColumn FormType;
         private System.Windows.Forms.DataGridViewTextBoxColumn FormName;
-        private System.Windows.Forms.DataGridView dgvForms;
-        private System.Windows.Forms.TextBox txtCreateWrDisplayName;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtInstrumentationKey;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn AppInsightsExists;
+        private System.Windows.Forms.GroupBox gboxConfigs;
+        private System.Windows.Forms.CheckBox cboxPageView;
+        private System.Windows.Forms.CheckBox cboxEvents;
+        private System.Windows.Forms.CheckBox cboxDependency;
+        private System.Windows.Forms.CheckBox cboxMetrics;
+        private System.Windows.Forms.CheckBox cboxTrace;
+        private System.Windows.Forms.CheckBox cboxAjax;
+        private System.Windows.Forms.CheckBox cboxException;
+        private System.Windows.Forms.CheckBox cboxPageLoad;
+        private System.Windows.Forms.LinkLabel linklblSelectAll;
     }
 }

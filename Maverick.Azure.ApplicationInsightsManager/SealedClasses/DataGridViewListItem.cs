@@ -12,5 +12,6 @@ namespace Maverick.Azure.ApplicationInsightsManager
         public string EntityName { get; set; }
         public string FormName { get; set; }
         public string FormType { get; set; }
+        public bool doesAiExists { get; set; }
     }
 }

@@ -86,150 +86,74 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
             return orgService.RetrieveMultiple(qe).Entities.ToList();
         }
 
-        public static CreateResponse CreateWebResource(IOrganizationService orgService, string solutionUniqueName, string displayName, string schemaName, string prefix, string instrumentationKey, string githubLocation)
+        public static CreateResponse CreateWebResource(IOrganizationService orgService, string solutionUniqueName, string displayName, string schemaName, string prefix, string instrumentationKey)
         {
-            Entity webResource = new Entity("webresource");
-            webResource.Attributes.Add("name", string.Format("{0}{1}", prefix, schemaName));
-            webResource.Attributes.Add("displayname", displayName);
-            webResource.Attributes.Add("content", FileHelper.GetEncodedFileContents(instrumentationKey, githubLocation));
-            webResource.Attributes.Add("description", "Javascript to trace the client insights in Azure Application Insights.");
-            webResource.Attributes.Add("webresourcetype", new OptionSetValue(3));// 3 = JScript
+            const string AI_INIT_JS = "AI.Init.js";
+            // Check if AI.Init.js already exists
+            Guid aiWebResourceId = Guid.Empty;
+            QueryExpression qeAiWr = new QueryExpression("webresource");
+            qeAiWr.Criteria.AddCondition("name", ConditionOperator.Equal, string.Format("{0}{1}", prefix, AI_INIT_JS));
+            EntityCollection ecAiWr = orgService.RetrieveMultiple(qeAiWr);
+            if (ecAiWr != null && ecAiWr.Entities != null && ecAiWr.Entities.Count > 0)
+            {
+                aiWebResourceId = ecAiWr.Entities[0].Id;
+            }
+
+            // Create only if AI.Init.js does not exists
+            if (aiWebResourceId == Guid.Empty)
+            {
+                // Create AI.Init.js file
+                Entity aiWebResource = new Entity("webresource");
+                aiWebResource.Attributes.Add("name", string.Format("{0}{1}", prefix, AI_INIT_JS));
+                aiWebResource.Attributes.Add("displayname", AI_INIT_JS);
+                aiWebResource.Attributes.Add("content", FileHelper.GetAiInitFileContents(instrumentationKey));
+                aiWebResource.Attributes.Add("description", "Azure Application Insights initializer script.");
+                aiWebResource.Attributes.Add("webresourcetype", new OptionSetValue(3));// 3 = JScript
+
+                // Using CreateRequest because we want to add an optional parameter
+                CreateRequest aiRequest = new CreateRequest
+                {
+                    Target = aiWebResource
+                };
+                // Set the SolutionUniqueName optional parameter so the Web Resources will be created in the context of a specific solution.
+                aiRequest.Parameters.Add("SolutionUniqueName", solutionUniqueName);
+
+                CreateResponse aiResponse = (CreateResponse)orgService.Execute(aiRequest);
+                aiWebResourceId = aiResponse.id;
+            }
+
+            // Create D365Insights.js file
+            var d365InsightsDependencyXml = @"<Dependencies><Dependency componentType=""WebResource""><Library name=""" + string.Format("{0}{1}", prefix, AI_INIT_JS) + @""" displayName=""" + AI_INIT_JS + @""" languagecode="""" description=""Azure Application Insights initializer script."" libraryUniqueId=""{" + aiWebResourceId + @"}""/></Dependency></Dependencies>";
+
+            Entity d365InsightsWebResource = new Entity("webresource");
+            d365InsightsWebResource.Attributes.Add("name", string.Format("{0}{1}", prefix, schemaName));
+            d365InsightsWebResource.Attributes.Add("displayname", displayName);
+            d365InsightsWebResource.Attributes.Add("content", FileHelper.GetD365InsightsFileContents(instrumentationKey));
+            d365InsightsWebResource.Attributes.Add("description", "Javascript to trace the client insights in Azure Application Insights.");
+            d365InsightsWebResource.Attributes.Add("webresourcetype", new OptionSetValue(3));// 3 = JScript
+            d365InsightsWebResource.Attributes.Add("dependencyxml", d365InsightsDependencyXml);
 
             // Using CreateRequest because we want to add an optional parameter
-            CreateRequest request = new CreateRequest
+            CreateRequest d365InsightsRequest = new CreateRequest
             {
-                Target = webResource
+                Target = d365InsightsWebResource
             };
             // Set the SolutionUniqueName optional parameter so the Web Resources will be created in the context of a specific solution.
-            request.Parameters.Add("SolutionUniqueName", solutionUniqueName);
+            d365InsightsRequest.Parameters.Add("SolutionUniqueName", solutionUniqueName);
 
-            CreateResponse response = (CreateResponse)orgService.Execute(request);
+            CreateResponse d365InsightsResponse = (CreateResponse)orgService.Execute(d365InsightsRequest);
 
-            return response;
+            return d365InsightsResponse;
         }
 
-        public static void AddJavascriptLibraryToForm(IOrganizationService orgService, Guid formId, string formXml, string schemaName, string prefix)
+        public static void AddJavascriptLibraryToForm(IOrganizationService orgService, Guid formId, string formXml, string schemaName, string prefix, AppInsightsConfigs config)
         {
-            var formDoc = new XmlDocument();
-            formDoc.LoadXml(formXml);
-
-            var formNode = formDoc.SelectSingleNode("form");
-            if (formNode == null)
-            {
-                throw new Exception("Expected node \"formNode\" was not found");
-            }
-
-            var formLibrariesNode = formNode.SelectSingleNode("formLibraries");
-            var eventLibrary = formNode.SelectSingleNode("events");
-            if (formLibrariesNode == null)
-            {
-                formLibrariesNode = formDoc.CreateElement("formLibraries");
-                formNode.AppendChild(formLibrariesNode);
-            }
-            if (eventLibrary == null)
-            {
-                eventLibrary = formDoc.CreateElement("events");
-                formNode.AppendChild(eventLibrary);
-            }
-
-            var jscriptName = string.Format("{0}{1}", prefix, schemaName);
-
-            if (jscriptName != null)
-            {
-                var libraryNode = formLibrariesNode.SelectSingleNode(string.Format("Library[@name = '{0}']", jscriptName));
-
-                if (libraryNode != null)
-                {
-                    // Do nothing
-                }
-                else
-                {
-                    var nameAttribute = formDoc.CreateAttribute("name");
-                    var libraryUniqueIdAttribute = formDoc.CreateAttribute("libraryUniqueId");
-
-                    nameAttribute.Value = jscriptName;
-                    libraryUniqueIdAttribute.Value = Guid.NewGuid().ToString("B");
-                    libraryNode = formDoc.CreateElement("Library");
-
-                    if (libraryNode.Attributes != null)
-                    {
-                        libraryNode.Attributes.Append(nameAttribute);
-                        libraryNode.Attributes.Append(libraryUniqueIdAttribute);
-                    }
-
-                    if (formLibrariesNode.ChildNodes.Count > 0)
-                    {
-                        formLibrariesNode.InsertBefore(libraryNode, formLibrariesNode.FirstChild);
-                    }
-                    else
-                    {
-                        formLibrariesNode.AppendChild(libraryNode);
-                    }
-                }
-
-                // Add onload event
-                var loadEventNode = eventLibrary.SelectSingleNode("event[@name='onload']");
-                if (loadEventNode == null)
-                {
-                    loadEventNode = formDoc.CreateElement("event");
-
-                    var loadEventNameAttribute = formDoc.CreateAttribute("name");
-                    var loadEventApplicationAttribute = formDoc.CreateAttribute("application");
-                    var loadEventActiveAttribute = formDoc.CreateAttribute("active");
-                    loadEventNameAttribute.Value = "onload";
-                    loadEventApplicationAttribute.Value = "false";
-                    loadEventActiveAttribute.Value = "false";
-                    loadEventNode.Attributes.Append(loadEventNameAttribute);
-                    loadEventNode.Attributes.Append(loadEventApplicationAttribute);
-                    loadEventNode.Attributes.Append(loadEventActiveAttribute);
-
-                    eventLibrary.AppendChild(loadEventNode);
-                }
-
-                var loadhandlersNode = loadEventNode.SelectSingleNode("Handlers");
-                if (loadhandlersNode == null)
-                {
-                    loadhandlersNode = formDoc.CreateElement("Handlers");
-                    loadEventNode.AppendChild(loadhandlersNode);
-                }
-
-                var loadfunctionNode = loadhandlersNode.SelectSingleNode("Handler[@functionName='LoadTelemetry']");
-                if (loadfunctionNode != null)
-                {
-                    return;
-                }
-
-                var loadfunctionNameAttribute = formDoc.CreateAttribute("functionName");
-                var loadlibraryNameAttribute = formDoc.CreateAttribute("libraryName");
-                var loadhandlerUniqueIdAttribute = formDoc.CreateAttribute("handlerUniqueId");
-                var loadenabledAttribute = formDoc.CreateAttribute("enabled");
-                var loadparametersAttribute = formDoc.CreateAttribute("parameters");
-                var loadpassExecutionContextAttribute = formDoc.CreateAttribute("passExecutionContext");
-
-                loadfunctionNameAttribute.Value = "LoadTelemetry";
-                loadlibraryNameAttribute.Value = jscriptName;
-                loadhandlerUniqueIdAttribute.Value = Guid.NewGuid().ToString("B");
-                loadenabledAttribute.Value = "true";
-                loadparametersAttribute.Value = "";
-                loadpassExecutionContextAttribute.Value = "true";
-
-                loadfunctionNode = formDoc.CreateElement("Handler");
-                loadfunctionNode.Attributes.Append(loadfunctionNameAttribute);
-                loadfunctionNode.Attributes.Append(loadlibraryNameAttribute);
-                loadfunctionNode.Attributes.Append(loadhandlerUniqueIdAttribute);
-                loadfunctionNode.Attributes.Append(loadenabledAttribute);
-                loadfunctionNode.Attributes.Append(loadparametersAttribute);
-                loadfunctionNode.Attributes.Append(loadpassExecutionContextAttribute);
-                loadhandlersNode.AppendChild(loadfunctionNode);
-
-            }
-
+            XmlDocument formDoc = XmlHelper.GetModifiedFormXml(formXml, prefix, schemaName, config);
 
             Entity systemForm = new Entity("systemform", formId);
             systemForm["formxml"] = formDoc.OuterXml;
             orgService.Update(systemForm);
 
-            //PublishSystemForm(service);
         }
 
         public static void PublishSystemForm(IOrganizationService service)
@@ -243,6 +167,24 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
 
             var publishAllRequest = new PublishAllXmlRequest();
             service.Execute(publishAllRequest);
+        }
+
+        public static List<Entity> GetWebResources(IOrganizationService orgService)
+        {
+            var qe = new QueryExpression("webresource")
+            {
+                ColumnSet = new ColumnSet(new[] { "content", "name", "displayname", "webresourceid" }),
+                Criteria = new FilterExpression
+                {
+                    Conditions =
+                    {
+                        new ConditionExpression("webresourcetype", ConditionOperator.Equal, 3), // script only
+                        new ConditionExpression("iscustomizable", ConditionOperator.Equal, true)
+                    }
+                }
+            };
+
+            return orgService.RetrieveMultiple(qe).Entities.ToList();
         }
     }
 }
