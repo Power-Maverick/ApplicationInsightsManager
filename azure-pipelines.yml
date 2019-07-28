@@ -13,13 +13,22 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  buildNumber: '1.0.0'
 
 steps:
 - task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 
+    checkLatest: true
 
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+
+- task: PowerShell@2
+  inputs:
+    filePath: 'assemblyversion.ps1'
+    arguments: '$(buildNumber)'
 
 - task: VSBuild@1
   inputs:
@@ -31,3 +40,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'assembly'
+    publishLocation: 'Container'
