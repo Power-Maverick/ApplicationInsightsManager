@@ -53,6 +53,12 @@ steps:
     Contents: 'ApplicationInsightsManager.nuspec'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(build.sourcesDirectory)/Maverick.Azure.ApplicationInsightsManager/bin/Release'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/ApplicationInsightsManager/bin/Release'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
