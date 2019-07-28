@@ -73,6 +73,10 @@
             this.cboxDependency = new System.Windows.Forms.CheckBox();
             this.cboxEvents = new System.Windows.Forms.CheckBox();
             this.linklblSelectAll = new System.Windows.Forms.LinkLabel();
+            this.tsbReset = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.linklblCreator = new System.Windows.Forms.LinkLabel();
+            this.tsbHelp = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             this.gboxSolutionManagement.SuspendLayout();
             this.gboxCreate.SuspendLayout();
@@ -121,7 +125,10 @@
             this.tsbClose,
             this.tssSeparator1,
             this.tsbLoadSolutions,
-            this.tssSeparator2});
+            this.tssSeparator2,
+            this.tsbReset,
+            this.toolStripSeparator1,
+            this.tsbHelp});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1068, 27);
@@ -530,10 +537,48 @@
             this.linklblSelectAll.Text = "Select All (except where AI Script Exists)";
             this.linklblSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblSelectAll_LinkClicked);
             // 
+            // tsbReset
+            // 
+            this.tsbReset.Image = ((System.Drawing.Image)(resources.GetObject("tsbReset.Image")));
+            this.tsbReset.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbReset.Name = "tsbReset";
+            this.tsbReset.Size = new System.Drawing.Size(59, 24);
+            this.tsbReset.Text = "Reset";
+            this.tsbReset.Click += new System.EventHandler(this.TsbReset_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // linklblCreator
+            // 
+            this.linklblCreator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linklblCreator.Image = ((System.Drawing.Image)(resources.GetObject("linklblCreator.Image")));
+            this.linklblCreator.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.linklblCreator.Location = new System.Drawing.Point(911, 4);
+            this.linklblCreator.Name = "linklblCreator";
+            this.linklblCreator.Size = new System.Drawing.Size(154, 23);
+            this.linklblCreator.TabIndex = 12;
+            this.linklblCreator.TabStop = true;
+            this.linklblCreator.Text = "by Danish (Danz-Maverick)";
+            this.linklblCreator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.linklblCreator.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblCreator_LinkClicked);
+            // 
+            // tsbHelp
+            // 
+            this.tsbHelp.Image = ((System.Drawing.Image)(resources.GetObject("tsbHelp.Image")));
+            this.tsbHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbHelp.Name = "tsbHelp";
+            this.tsbHelp.Size = new System.Drawing.Size(56, 24);
+            this.tsbHelp.Text = "Help";
+            this.tsbHelp.Click += new System.EventHandler(this.TsbHelp_Click);
+            // 
             // MainPluginControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.linklblCreator);
             this.Controls.Add(this.pnlEntitiesSelection);
             this.Controls.Add(this.gboxSolutionManagement);
             this.Controls.Add(this.toolStripMenu);
@@ -605,5 +650,9 @@
         private System.Windows.Forms.CheckBox cboxException;
         private System.Windows.Forms.CheckBox cboxPageLoad;
         private System.Windows.Forms.LinkLabel linklblSelectAll;
+        private System.Windows.Forms.ToolStripButton tsbReset;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.LinkLabel linklblCreator;
+        private System.Windows.Forms.ToolStripButton tsbHelp;
     }
 }

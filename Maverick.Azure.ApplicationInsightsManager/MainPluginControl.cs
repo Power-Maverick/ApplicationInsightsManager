@@ -248,8 +248,6 @@ namespace Maverick.Azure.ApplicationInsightsManager
                             && !string.IsNullOrEmpty(txtCreateWrSchemaName.Text)
                             && !string.IsNullOrEmpty(txtInstrumentationKey.Text));
 
-                //TODO - check if atleast one form is checked
-
             }
             else if (selection == WebResourceOption.UseExisting)
             {
@@ -257,7 +255,6 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 isValid = (cmbExistingWebResource.SelectedIndex != -1
                             && !string.IsNullOrEmpty(txtInstrumentationKey.Text));
 
-                //TODO - check if atleast one form is checked
             }
 
             return isValid;
@@ -313,6 +310,34 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     row.DefaultCellStyle.BackColor = Color.Gray;
                 }
             }
+        }
+
+        private void ResetForm()
+        {
+            txtInstrumentationKey.Text = string.Empty;
+            cmbExistingWebResource.Items.Clear();
+            txtCreateWrDisplayName.Text = string.Empty;
+            txtCreateWrSchemaName.Text = string.Empty;
+            txtSearch.Text = string.Empty;
+            cboxFilterBy.SelectedIndex = 0;
+
+            var dgvRows = dgvForms.Rows;
+            foreach (DataGridViewRow row in dgvRows)
+            {
+                if (!bool.Parse(row.Cells["AppInsightsExists"].Value.ToString()))
+                {
+                    row.Cells["Select"].Value = false;
+                }
+            }
+
+            cboxPageLoad.Checked = false;
+            cboxPageView.Checked = false;
+            cboxException.Checked = false;
+            cboxAjax.Checked = true;
+            cboxTrace.Checked = false;
+            cboxMetrics.Checked = false;
+            cboxDependency.Checked = false;
+            cboxEvents.Checked = false;
         }
 
         #endregion
@@ -372,6 +397,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
         private void TsbLoadSolutions_Click(object sender, EventArgs e)
         {
             ExecuteMethod(LoadSolutions);
+            ResetForm();
         }
 
         private void CboxSolutions_SelectedIndexChanged(object sender, EventArgs e)
@@ -489,6 +515,21 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     row.Cells["Select"].Value = true;
                 }
             }
+        }
+
+        private void TsbReset_Click(object sender, EventArgs e)
+        {
+            ResetForm();
+        }
+
+        private void LinklblCreator_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://twitter.com/DanzMaverick");
+        }
+
+        private void TsbHelp_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Danz-maveRICK/ApplicationInsightsManager/wiki");
         }
     }
 }
