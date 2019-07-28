@@ -3,7 +3,7 @@
   <metadata>
     <id>Maverick.Azure.ApplicationInsightsManager</id>
     <version>1.0.0</version>
-    <titleApplication Insights Manager</title>
+    <title>Application Insights Manager</title>
     <authors>Danish Naglekar</authors>
     <owners>Danz-maveRICK</owners>
     <projectUrl>https://github.com/Danz-maveRICK/ApplicationInsightsManager</projectUrl>
