@@ -159,6 +159,7 @@
     <TypeScriptCompile Include="Scripts\typings\xrm.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ReleaseNotes.txt" />
     <Content Include="Scripts\AI.Init.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
