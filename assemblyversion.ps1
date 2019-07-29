@@ -26,9 +26,9 @@ function Update-AssemblyInfoVersionFile
     $AllVersionFiles = Get-ChildItem $SrcPath AssemblyInfo.cs -recurse
 	
     $versions = $productVersion.Split('.')
-    $major = $buildYear
-    $minor = $buildMonth
-    $patch = $buildDate
+    $major = $productVersion.Split('.')[0]
+    $minor = $buildYear
+    $patch = $buildMonth$buildDate
 
     $assemblyVersion = "$major.$minor.$patch.$buildIncrementalNumber"
     $assemblyFileVersion = "$major.$minor.$patch.$buildIncrementalNumber"
