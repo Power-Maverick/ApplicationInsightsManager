@@ -28,7 +28,7 @@ function Update-AssemblyInfoVersionFile
     $versions = $productVersion.Split('.')
     $major = $productVersion.Split('.')[0]
     $minor = $buildYear
-    $patch = $buildMonth$buildDate
+    $patch = $buildMonth + $buildDate
 
     $assemblyVersion = "$major.$minor.$patch.$buildIncrementalNumber"
     $assemblyFileVersion = "$major.$minor.$patch.$buildIncrementalNumber"
