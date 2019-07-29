@@ -27,9 +27,9 @@ function Update-AssemblyInfoVersionFile
     $minor = $versions[1]
     $patch = $versions[2]
 
-    $assemblyVersion = $productVersion
+    $assemblyVersion = "$major.$minor.$patch.$buildIncrementalNumber"
     $assemblyFileVersion = "$major.$minor.$patch.$buildIncrementalNumber"
-    $assemblyInformationalVersion = $productVersion
+    $assemblyInformationalVersion = "$major.$minor.$patch.$buildIncrementalNumber"
      
     Write-Verbose "Transformed Assembly Version is $assemblyVersion" -Verbose
     Write-Verbose "Transformed Assembly File Version is $assemblyFileVersion" -Verbose
