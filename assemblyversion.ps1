@@ -15,6 +15,9 @@ function Update-AssemblyInfoVersionFile
     {
         $splitted = $buildNumber.Split('.')
         $buildIncrementalNumber = $splitted[$splitted.Length - 1]
+	$buildYear = $splitted[0].Substring(0,4)
+	$buildMonth = $splitted[0].Substring(4,2)
+	$buildDate = $splitted[0].Substring(6,2)
     }
       
     $SrcPath = $env:BUILD_SOURCESDIRECTORY
@@ -23,9 +26,9 @@ function Update-AssemblyInfoVersionFile
     $AllVersionFiles = Get-ChildItem $SrcPath AssemblyInfo.cs -recurse
 	
     $versions = $productVersion.Split('.')
-    $major = $versions[0]
-    $minor = $versions[1]
-    $patch = $versions[2]
+    $major = $buildYear
+    $minor = $buildMonth
+    $patch = $buildDate
 
     $assemblyVersion = "$major.$minor.$patch.$buildIncrementalNumber"
     $assemblyFileVersion = "$major.$minor.$patch.$buildIncrementalNumber"
