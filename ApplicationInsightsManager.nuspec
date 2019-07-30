@@ -12,7 +12,7 @@
     <licenseUrl>https://github.com/Danz-maveRICK/ApplicationInsightsManager/blob/master/LICENSE</licenseUrl>
     <description>Create a new jscript file to track client insights by integrating it with Azure Application Insights. Bulk update all the required forms with the App Insights jscript.</description>
     <summary>Create a new jscript file to track client insights by integrating it with Azure Application Insights. Bulk update all the required forms with the App Insights jscript.</summary>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>$releasenotes$</releaseNotes>
     <copyright>Copyright © Danish Naglekar</copyright>
     <tags>XrmToolBox Plugins, Application Insights, Azure</tags>
     <dependencies>
