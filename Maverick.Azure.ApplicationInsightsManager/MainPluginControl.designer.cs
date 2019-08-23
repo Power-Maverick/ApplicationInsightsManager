@@ -34,6 +34,9 @@
             this.tsbLoadSolutions = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
+            this.tsbReset = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbHelp = new System.Windows.Forms.ToolStripButton();
             this.gboxSolutionManagement = new System.Windows.Forms.GroupBox();
             this.txtInstrumentationKey = new System.Windows.Forms.TextBox();
             this.lblInstrumentationKey = new System.Windows.Forms.Label();
@@ -41,46 +44,43 @@
             this.btnCreateWebResource = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.cboxSolutions = new System.Windows.Forms.ComboBox();
+            this.gboxUseExisting = new System.Windows.Forms.GroupBox();
+            this.cmbExistingWebResource = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.gboxCreate = new System.Windows.Forms.GroupBox();
             this.txtCreateWrDisplayName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCreateWrSchemaName = new System.Windows.Forms.TextBox();
             this.lblCreateSolutionPrefix = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.gboxUseExisting = new System.Windows.Forms.GroupBox();
-            this.cmbExistingWebResource = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.dgvForms = new System.Windows.Forms.DataGridView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.cboxFilterBy = new System.Windows.Forms.ComboBox();
-            this.pnlEntitiesSelection = new System.Windows.Forms.Panel();
-            this.btnApplyPublish = new System.Windows.Forms.Button();
             this.Select = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.FormId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EntityName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FormType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FormName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AppInsightsExists = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.gboxConfigs = new System.Windows.Forms.GroupBox();
-            this.cboxPageView = new System.Windows.Forms.CheckBox();
-            this.cboxPageLoad = new System.Windows.Forms.CheckBox();
-            this.cboxException = new System.Windows.Forms.CheckBox();
-            this.cboxAjax = new System.Windows.Forms.CheckBox();
-            this.cboxTrace = new System.Windows.Forms.CheckBox();
-            this.cboxMetrics = new System.Windows.Forms.CheckBox();
-            this.cboxDependency = new System.Windows.Forms.CheckBox();
-            this.cboxEvents = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cboxFilterBy = new System.Windows.Forms.ComboBox();
+            this.pnlEntitiesSelection = new System.Windows.Forms.Panel();
             this.linklblSelectAll = new System.Windows.Forms.LinkLabel();
-            this.tsbReset = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.gboxConfigs = new System.Windows.Forms.GroupBox();
+            this.cboxEvents = new System.Windows.Forms.CheckBox();
+            this.cboxDependency = new System.Windows.Forms.CheckBox();
+            this.cboxMetrics = new System.Windows.Forms.CheckBox();
+            this.cboxTrace = new System.Windows.Forms.CheckBox();
+            this.cboxAjax = new System.Windows.Forms.CheckBox();
+            this.cboxException = new System.Windows.Forms.CheckBox();
+            this.cboxPageLoad = new System.Windows.Forms.CheckBox();
+            this.cboxPageView = new System.Windows.Forms.CheckBox();
+            this.btnApplyPublish = new System.Windows.Forms.Button();
             this.linklblCreator = new System.Windows.Forms.LinkLabel();
-            this.tsbHelp = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenu.SuspendLayout();
             this.gboxSolutionManagement.SuspendLayout();
-            this.gboxCreate.SuspendLayout();
             this.gboxUseExisting.SuspendLayout();
+            this.gboxCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvForms)).BeginInit();
             this.pnlEntitiesSelection.SuspendLayout();
             this.gboxConfigs.SuspendLayout();
@@ -135,6 +135,29 @@
             this.toolStripMenu.Stretch = true;
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
+            // 
+            // tsbReset
+            // 
+            this.tsbReset.Image = ((System.Drawing.Image)(resources.GetObject("tsbReset.Image")));
+            this.tsbReset.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbReset.Name = "tsbReset";
+            this.tsbReset.Size = new System.Drawing.Size(59, 24);
+            this.tsbReset.Text = "Reset";
+            this.tsbReset.Click += new System.EventHandler(this.TsbReset_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // tsbHelp
+            // 
+            this.tsbHelp.Image = ((System.Drawing.Image)(resources.GetObject("tsbHelp.Image")));
+            this.tsbHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbHelp.Name = "tsbHelp";
+            this.tsbHelp.Size = new System.Drawing.Size(56, 24);
+            this.tsbHelp.Text = "Help";
+            this.tsbHelp.Click += new System.EventHandler(this.TsbHelp_Click);
             // 
             // gboxSolutionManagement
             // 
@@ -209,6 +232,36 @@
             this.cboxSolutions.TabIndex = 0;
             this.cboxSolutions.SelectedIndexChanged += new System.EventHandler(this.CboxSolutions_SelectedIndexChanged);
             // 
+            // gboxUseExisting
+            // 
+            this.gboxUseExisting.Controls.Add(this.cmbExistingWebResource);
+            this.gboxUseExisting.Controls.Add(this.label6);
+            this.gboxUseExisting.Location = new System.Drawing.Point(478, 17);
+            this.gboxUseExisting.Name = "gboxUseExisting";
+            this.gboxUseExisting.Size = new System.Drawing.Size(334, 82);
+            this.gboxUseExisting.TabIndex = 6;
+            this.gboxUseExisting.TabStop = false;
+            this.gboxUseExisting.Text = "Use Existing";
+            this.gboxUseExisting.Visible = false;
+            // 
+            // cmbExistingWebResource
+            // 
+            this.cmbExistingWebResource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbExistingWebResource.FormattingEnabled = true;
+            this.cmbExistingWebResource.Location = new System.Drawing.Point(97, 31);
+            this.cmbExistingWebResource.Name = "cmbExistingWebResource";
+            this.cmbExistingWebResource.Size = new System.Drawing.Size(231, 21);
+            this.cmbExistingWebResource.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 34);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(85, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Web Resource :";
+            // 
             // gboxCreate
             // 
             this.gboxCreate.Controls.Add(this.txtCreateWrDisplayName);
@@ -264,36 +317,6 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Schema Name:";
             // 
-            // gboxUseExisting
-            // 
-            this.gboxUseExisting.Controls.Add(this.cmbExistingWebResource);
-            this.gboxUseExisting.Controls.Add(this.label6);
-            this.gboxUseExisting.Location = new System.Drawing.Point(478, 17);
-            this.gboxUseExisting.Name = "gboxUseExisting";
-            this.gboxUseExisting.Size = new System.Drawing.Size(334, 82);
-            this.gboxUseExisting.TabIndex = 6;
-            this.gboxUseExisting.TabStop = false;
-            this.gboxUseExisting.Text = "Use Existing";
-            this.gboxUseExisting.Visible = false;
-            // 
-            // cmbExistingWebResource
-            // 
-            this.cmbExistingWebResource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbExistingWebResource.FormattingEnabled = true;
-            this.cmbExistingWebResource.Location = new System.Drawing.Point(97, 31);
-            this.cmbExistingWebResource.Name = "cmbExistingWebResource";
-            this.cmbExistingWebResource.Size = new System.Drawing.Size(231, 21);
-            this.cmbExistingWebResource.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 13);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Web Resource :";
-            // 
             // dgvForms
             // 
             this.dgvForms.AllowUserToAddRows = false;
@@ -313,79 +336,6 @@
             this.dgvForms.Size = new System.Drawing.Size(629, 442);
             this.dgvForms.TabIndex = 6;
             this.dgvForms.DataSourceChanged += new System.EventHandler(this.DgvForms_DataSourceChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Search:";
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Location = new System.Drawing.Point(57, 7);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(304, 20);
-            this.txtSearch.TabIndex = 8;
-            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(446, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 13);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "Filter By:";
-            // 
-            // cboxFilterBy
-            // 
-            this.cboxFilterBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxFilterBy.FormattingEnabled = true;
-            this.cboxFilterBy.Items.AddRange(new object[] {
-            "All",
-            "Form Type - Main",
-            "Form Type - Quick Create",
-            "AppInsights Does Not Exists",
-            "AppInsights Exsits"});
-            this.cboxFilterBy.Location = new System.Drawing.Point(499, 7);
-            this.cboxFilterBy.Name = "cboxFilterBy";
-            this.cboxFilterBy.Size = new System.Drawing.Size(137, 21);
-            this.cboxFilterBy.TabIndex = 10;
-            this.cboxFilterBy.SelectedIndexChanged += new System.EventHandler(this.CboxFilterBy_SelectedIndexChanged);
-            // 
-            // pnlEntitiesSelection
-            // 
-            this.pnlEntitiesSelection.Controls.Add(this.linklblSelectAll);
-            this.pnlEntitiesSelection.Controls.Add(this.gboxConfigs);
-            this.pnlEntitiesSelection.Controls.Add(this.btnApplyPublish);
-            this.pnlEntitiesSelection.Controls.Add(this.dgvForms);
-            this.pnlEntitiesSelection.Controls.Add(this.cboxFilterBy);
-            this.pnlEntitiesSelection.Controls.Add(this.label7);
-            this.pnlEntitiesSelection.Controls.Add(this.label8);
-            this.pnlEntitiesSelection.Controls.Add(this.txtSearch);
-            this.pnlEntitiesSelection.Location = new System.Drawing.Point(3, 145);
-            this.pnlEntitiesSelection.Name = "pnlEntitiesSelection";
-            this.pnlEntitiesSelection.Size = new System.Drawing.Size(827, 647);
-            this.pnlEntitiesSelection.TabIndex = 11;
-            this.pnlEntitiesSelection.Visible = false;
-            // 
-            // btnApplyPublish
-            // 
-            this.btnApplyPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApplyPublish.Image = ((System.Drawing.Image)(resources.GetObject("btnApplyPublish.Image")));
-            this.btnApplyPublish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApplyPublish.Location = new System.Drawing.Point(7, 600);
-            this.btnApplyPublish.Name = "btnApplyPublish";
-            this.btnApplyPublish.Size = new System.Drawing.Size(151, 44);
-            this.btnApplyPublish.TabIndex = 11;
-            this.btnApplyPublish.Text = "Apply & Publish";
-            this.btnApplyPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnApplyPublish.UseMnemonic = false;
-            this.btnApplyPublish.UseVisualStyleBackColor = true;
-            this.btnApplyPublish.Click += new System.EventHandler(this.BtnApplyPublish_Click);
             // 
             // Select
             // 
@@ -427,6 +377,75 @@
             this.AppInsightsExists.Name = "AppInsightsExists";
             this.AppInsightsExists.ReadOnly = true;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 10);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Search:";
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(57, 7);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(304, 20);
+            this.txtSearch.TabIndex = 8;
+            this.txtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(446, 10);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Filter By:";
+            // 
+            // cboxFilterBy
+            // 
+            this.cboxFilterBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxFilterBy.FormattingEnabled = true;
+            this.cboxFilterBy.Items.AddRange(new object[] {
+            "All",
+            "Form Type - Main",
+            "Form Type - Quick Create",
+            "AppInsights Does Not Exists",
+            "AppInsights Exists"});
+            this.cboxFilterBy.Location = new System.Drawing.Point(499, 7);
+            this.cboxFilterBy.Name = "cboxFilterBy";
+            this.cboxFilterBy.Size = new System.Drawing.Size(137, 21);
+            this.cboxFilterBy.TabIndex = 10;
+            this.cboxFilterBy.SelectedIndexChanged += new System.EventHandler(this.CboxFilterBy_SelectedIndexChanged);
+            // 
+            // pnlEntitiesSelection
+            // 
+            this.pnlEntitiesSelection.Controls.Add(this.linklblSelectAll);
+            this.pnlEntitiesSelection.Controls.Add(this.gboxConfigs);
+            this.pnlEntitiesSelection.Controls.Add(this.btnApplyPublish);
+            this.pnlEntitiesSelection.Controls.Add(this.dgvForms);
+            this.pnlEntitiesSelection.Controls.Add(this.cboxFilterBy);
+            this.pnlEntitiesSelection.Controls.Add(this.label7);
+            this.pnlEntitiesSelection.Controls.Add(this.label8);
+            this.pnlEntitiesSelection.Controls.Add(this.txtSearch);
+            this.pnlEntitiesSelection.Location = new System.Drawing.Point(3, 145);
+            this.pnlEntitiesSelection.Name = "pnlEntitiesSelection";
+            this.pnlEntitiesSelection.Size = new System.Drawing.Size(827, 647);
+            this.pnlEntitiesSelection.TabIndex = 11;
+            this.pnlEntitiesSelection.Visible = false;
+            // 
+            // linklblSelectAll
+            // 
+            this.linklblSelectAll.AutoSize = true;
+            this.linklblSelectAll.Location = new System.Drawing.Point(7, 38);
+            this.linklblSelectAll.Name = "linklblSelectAll";
+            this.linklblSelectAll.Size = new System.Drawing.Size(197, 13);
+            this.linklblSelectAll.TabIndex = 13;
+            this.linklblSelectAll.TabStop = true;
+            this.linklblSelectAll.Text = "Select All (except where AI Script Exists)";
+            this.linklblSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblSelectAll_LinkClicked);
+            // 
             // gboxConfigs
             // 
             this.gboxConfigs.Controls.Add(this.cboxEvents);
@@ -444,35 +463,45 @@
             this.gboxConfigs.TabStop = false;
             this.gboxConfigs.Text = "Configurations";
             // 
-            // cboxPageView
+            // cboxEvents
             // 
-            this.cboxPageView.AutoSize = true;
-            this.cboxPageView.Location = new System.Drawing.Point(7, 20);
-            this.cboxPageView.Name = "cboxPageView";
-            this.cboxPageView.Size = new System.Drawing.Size(157, 17);
-            this.cboxPageView.TabIndex = 0;
-            this.cboxPageView.Text = "Disable PageView Tracking";
-            this.cboxPageView.UseVisualStyleBackColor = true;
+            this.cboxEvents.AutoSize = true;
+            this.cboxEvents.Location = new System.Drawing.Point(316, 43);
+            this.cboxEvents.Name = "cboxEvents";
+            this.cboxEvents.Size = new System.Drawing.Size(137, 17);
+            this.cboxEvents.TabIndex = 7;
+            this.cboxEvents.Text = "Disable Event Tracking";
+            this.cboxEvents.UseVisualStyleBackColor = true;
             // 
-            // cboxPageLoad
+            // cboxDependency
             // 
-            this.cboxPageLoad.AutoSize = true;
-            this.cboxPageLoad.Location = new System.Drawing.Point(7, 43);
-            this.cboxPageLoad.Name = "cboxPageLoad";
-            this.cboxPageLoad.Size = new System.Drawing.Size(158, 17);
-            this.cboxPageLoad.TabIndex = 1;
-            this.cboxPageLoad.Text = "Disable PageLoad Tracking";
-            this.cboxPageLoad.UseVisualStyleBackColor = true;
+            this.cboxDependency.AutoSize = true;
+            this.cboxDependency.Location = new System.Drawing.Point(316, 20);
+            this.cboxDependency.Name = "cboxDependency";
+            this.cboxDependency.Size = new System.Drawing.Size(170, 17);
+            this.cboxDependency.TabIndex = 6;
+            this.cboxDependency.Text = "Disable Dependency Tracking";
+            this.cboxDependency.UseVisualStyleBackColor = true;
             // 
-            // cboxException
+            // cboxMetrics
             // 
-            this.cboxException.AutoSize = true;
-            this.cboxException.Location = new System.Drawing.Point(7, 66);
-            this.cboxException.Name = "cboxException";
-            this.cboxException.Size = new System.Drawing.Size(156, 17);
-            this.cboxException.TabIndex = 2;
-            this.cboxException.Text = "Disable Exception Tracking";
-            this.cboxException.UseVisualStyleBackColor = true;
+            this.cboxMetrics.AutoSize = true;
+            this.cboxMetrics.Location = new System.Drawing.Point(170, 66);
+            this.cboxMetrics.Name = "cboxMetrics";
+            this.cboxMetrics.Size = new System.Drawing.Size(143, 17);
+            this.cboxMetrics.TabIndex = 5;
+            this.cboxMetrics.Text = "Disable Metrics Tracking";
+            this.cboxMetrics.UseVisualStyleBackColor = true;
+            // 
+            // cboxTrace
+            // 
+            this.cboxTrace.AutoSize = true;
+            this.cboxTrace.Location = new System.Drawing.Point(170, 43);
+            this.cboxTrace.Name = "cboxTrace";
+            this.cboxTrace.Size = new System.Drawing.Size(137, 17);
+            this.cboxTrace.TabIndex = 4;
+            this.cboxTrace.Text = "Disable Trace Tracking";
+            this.cboxTrace.UseVisualStyleBackColor = true;
             // 
             // cboxAjax
             // 
@@ -486,70 +515,50 @@
             this.cboxAjax.Text = "Disable Ajax Tracking";
             this.cboxAjax.UseVisualStyleBackColor = true;
             // 
-            // cboxTrace
+            // cboxException
             // 
-            this.cboxTrace.AutoSize = true;
-            this.cboxTrace.Location = new System.Drawing.Point(170, 43);
-            this.cboxTrace.Name = "cboxTrace";
-            this.cboxTrace.Size = new System.Drawing.Size(137, 17);
-            this.cboxTrace.TabIndex = 4;
-            this.cboxTrace.Text = "Disable Trace Tracking";
-            this.cboxTrace.UseVisualStyleBackColor = true;
+            this.cboxException.AutoSize = true;
+            this.cboxException.Location = new System.Drawing.Point(7, 66);
+            this.cboxException.Name = "cboxException";
+            this.cboxException.Size = new System.Drawing.Size(156, 17);
+            this.cboxException.TabIndex = 2;
+            this.cboxException.Text = "Disable Exception Tracking";
+            this.cboxException.UseVisualStyleBackColor = true;
             // 
-            // cboxMetrics
+            // cboxPageLoad
             // 
-            this.cboxMetrics.AutoSize = true;
-            this.cboxMetrics.Location = new System.Drawing.Point(170, 66);
-            this.cboxMetrics.Name = "cboxMetrics";
-            this.cboxMetrics.Size = new System.Drawing.Size(143, 17);
-            this.cboxMetrics.TabIndex = 5;
-            this.cboxMetrics.Text = "Disable Metrics Tracking";
-            this.cboxMetrics.UseVisualStyleBackColor = true;
+            this.cboxPageLoad.AutoSize = true;
+            this.cboxPageLoad.Location = new System.Drawing.Point(7, 43);
+            this.cboxPageLoad.Name = "cboxPageLoad";
+            this.cboxPageLoad.Size = new System.Drawing.Size(158, 17);
+            this.cboxPageLoad.TabIndex = 1;
+            this.cboxPageLoad.Text = "Disable PageLoad Tracking";
+            this.cboxPageLoad.UseVisualStyleBackColor = true;
             // 
-            // cboxDependency
+            // cboxPageView
             // 
-            this.cboxDependency.AutoSize = true;
-            this.cboxDependency.Location = new System.Drawing.Point(316, 20);
-            this.cboxDependency.Name = "cboxDependency";
-            this.cboxDependency.Size = new System.Drawing.Size(170, 17);
-            this.cboxDependency.TabIndex = 6;
-            this.cboxDependency.Text = "Disable Dependency Tracking";
-            this.cboxDependency.UseVisualStyleBackColor = true;
+            this.cboxPageView.AutoSize = true;
+            this.cboxPageView.Location = new System.Drawing.Point(7, 20);
+            this.cboxPageView.Name = "cboxPageView";
+            this.cboxPageView.Size = new System.Drawing.Size(157, 17);
+            this.cboxPageView.TabIndex = 0;
+            this.cboxPageView.Text = "Disable PageView Tracking";
+            this.cboxPageView.UseVisualStyleBackColor = true;
             // 
-            // cboxEvents
+            // btnApplyPublish
             // 
-            this.cboxEvents.AutoSize = true;
-            this.cboxEvents.Location = new System.Drawing.Point(316, 43);
-            this.cboxEvents.Name = "cboxEvents";
-            this.cboxEvents.Size = new System.Drawing.Size(137, 17);
-            this.cboxEvents.TabIndex = 7;
-            this.cboxEvents.Text = "Disable Event Tracking";
-            this.cboxEvents.UseVisualStyleBackColor = true;
-            // 
-            // linklblSelectAll
-            // 
-            this.linklblSelectAll.AutoSize = true;
-            this.linklblSelectAll.Location = new System.Drawing.Point(7, 38);
-            this.linklblSelectAll.Name = "linklblSelectAll";
-            this.linklblSelectAll.Size = new System.Drawing.Size(197, 13);
-            this.linklblSelectAll.TabIndex = 13;
-            this.linklblSelectAll.TabStop = true;
-            this.linklblSelectAll.Text = "Select All (except where AI Script Exists)";
-            this.linklblSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblSelectAll_LinkClicked);
-            // 
-            // tsbReset
-            // 
-            this.tsbReset.Image = ((System.Drawing.Image)(resources.GetObject("tsbReset.Image")));
-            this.tsbReset.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbReset.Name = "tsbReset";
-            this.tsbReset.Size = new System.Drawing.Size(59, 24);
-            this.tsbReset.Text = "Reset";
-            this.tsbReset.Click += new System.EventHandler(this.TsbReset_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.btnApplyPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApplyPublish.Image = ((System.Drawing.Image)(resources.GetObject("btnApplyPublish.Image")));
+            this.btnApplyPublish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApplyPublish.Location = new System.Drawing.Point(7, 600);
+            this.btnApplyPublish.Name = "btnApplyPublish";
+            this.btnApplyPublish.Size = new System.Drawing.Size(151, 44);
+            this.btnApplyPublish.TabIndex = 11;
+            this.btnApplyPublish.Text = "Apply & Publish";
+            this.btnApplyPublish.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnApplyPublish.UseMnemonic = false;
+            this.btnApplyPublish.UseVisualStyleBackColor = true;
+            this.btnApplyPublish.Click += new System.EventHandler(this.BtnApplyPublish_Click);
             // 
             // linklblCreator
             // 
@@ -564,15 +573,6 @@
             this.linklblCreator.Text = "by Danish (Danz-Maverick)";
             this.linklblCreator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linklblCreator.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblCreator_LinkClicked);
-            // 
-            // tsbHelp
-            // 
-            this.tsbHelp.Image = ((System.Drawing.Image)(resources.GetObject("tsbHelp.Image")));
-            this.tsbHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbHelp.Name = "tsbHelp";
-            this.tsbHelp.Size = new System.Drawing.Size(56, 24);
-            this.tsbHelp.Text = "Help";
-            this.tsbHelp.Click += new System.EventHandler(this.TsbHelp_Click);
             // 
             // MainPluginControl
             // 
@@ -590,10 +590,10 @@
             this.toolStripMenu.PerformLayout();
             this.gboxSolutionManagement.ResumeLayout(false);
             this.gboxSolutionManagement.PerformLayout();
-            this.gboxCreate.ResumeLayout(false);
-            this.gboxCreate.PerformLayout();
             this.gboxUseExisting.ResumeLayout(false);
             this.gboxUseExisting.PerformLayout();
+            this.gboxCreate.ResumeLayout(false);
+            this.gboxCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvForms)).EndInit();
             this.pnlEntitiesSelection.ResumeLayout(false);
             this.pnlEntitiesSelection.PerformLayout();

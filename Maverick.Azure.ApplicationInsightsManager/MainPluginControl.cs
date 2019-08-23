@@ -137,7 +137,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
             });
         }
 
-        private void CreateAndAddWebResourceToForms()
+        private void CreateAndAddWebResourceToForms(string jscriptName)
         {
             WorkAsync(new WorkAsyncInfo
             {
@@ -160,14 +160,14 @@ namespace Maverick.Azure.ApplicationInsightsManager
                         var result = args.Result as CreateResponse;
                         if (result != null)
                         {
-                            AddWebResourceToForms();
+                            AddWebResourceToForms(jscriptName);
                         }
                     }
                 }
             });
         }
 
-        private void AddWebResourceToForms()
+        private void AddWebResourceToForms(string jscriptName)
         {
             WorkAsync(new WorkAsyncInfo
             {
@@ -194,10 +194,12 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     {
                         var formId = (Guid)row.Cells["FormId"].Value;
                         var formEntity = _formsCache.FirstOrDefault(f => f.Id == formId);
-
                         var formXml = formEntity.GetAttributeValue<string>("formxml");
 
-                        MetadataHelper.AddJavascriptLibraryToForm(Service, formId, formXml, txtCreateWrSchemaName.Text, lblCreateSolutionPrefix.Text, config);
+                        MetadataHelper.AddJavascriptLibraryToForm(Service, formId, formXml, jscriptName, config);
+
+                        row.Cells["AppInsightsExists"].Value = true;
+                        row.Cells[0].Value = false;
                     }
                 },
                 PostWorkCallBack = (args) =>
@@ -252,8 +254,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
             else if (selection == WebResourceOption.UseExisting)
             {
                 // Required data is populated
-                isValid = (cmbExistingWebResource.SelectedIndex != -1
-                            && !string.IsNullOrEmpty(txtInstrumentationKey.Text));
+                isValid = (cmbExistingWebResource.SelectedIndex != -1);
 
             }
 
@@ -430,7 +431,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
             pnlEntitiesSelection.Visible = true;
             lblInstrumentationKey.Visible = false;
             txtInstrumentationKey.Visible = false;
-            selection = WebResourceOption.Create;
+            selection = WebResourceOption.UseExisting;
 
             ExecuteMethod(LoadForms);
             ExecuteMethod(LoadAppInsightsWebResources);
@@ -482,20 +483,24 @@ namespace Maverick.Azure.ApplicationInsightsManager
         {
             if (ValidateSubmission())
             {
+                string jscriptName = string.Empty;
+
                 if (selection == WebResourceOption.Create)
                 {
+                    jscriptName = string.Format("{0}{1}", lblCreateSolutionPrefix.Text, txtCreateWrSchemaName.Text);
                     // Create a Web Resource and add it to the solution
-                    ExecuteMethod(CreateAndAddWebResourceToForms);
+                    ExecuteMethod(CreateAndAddWebResourceToForms, jscriptName);
                 }
                 else if (selection == WebResourceOption.UseExisting)
                 {
+                    jscriptName = ((ExistingWebResource)cmbExistingWebResource.SelectedValue).Name;
                     // Create a Web Resource and add it to the solution
-                    ExecuteMethod(AddWebResourceToForms);
+                    ExecuteMethod(AddWebResourceToForms, jscriptName);
                 }
             }
             else
             {
-                MessageBox.Show("Please populated the required data/components", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please populate the required data/components", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

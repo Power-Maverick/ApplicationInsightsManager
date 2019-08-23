@@ -16,7 +16,7 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
 
         #endregion
 
-        public static XmlDocument GetModifiedFormXml(string formXml, string prefix, string schemaName, AppInsightsConfigs config)
+        public static XmlDocument GetModifiedFormXml(string formXml, string jscriptName, AppInsightsConfigs config)
         {
             string D365Insights_CONFIG_PARAMS = @"{    
 	                ""enableDebug"": true,  
@@ -60,7 +60,7 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
                 formNode.AppendChild(eventLibrary);
             }
 
-            var jscriptName = string.Format("{0}{1}", prefix, schemaName);
+            //var jscriptName = string.Format("{0}{1}", prefix, schemaName);
 
             if (jscriptName != null)
             {

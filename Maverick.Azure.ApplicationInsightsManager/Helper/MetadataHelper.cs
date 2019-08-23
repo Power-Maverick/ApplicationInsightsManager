@@ -146,9 +146,9 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
             return d365InsightsResponse;
         }
 
-        public static void AddJavascriptLibraryToForm(IOrganizationService orgService, Guid formId, string formXml, string schemaName, string prefix, AppInsightsConfigs config)
+        public static void AddJavascriptLibraryToForm(IOrganizationService orgService, Guid formId, string formXml, string jscriptName, AppInsightsConfigs config)
         {
-            XmlDocument formDoc = XmlHelper.GetModifiedFormXml(formXml, prefix, schemaName, config);
+            XmlDocument formDoc = XmlHelper.GetModifiedFormXml(formXml, jscriptName, config);
 
             Entity systemForm = new Entity("systemform", formId);
             systemForm["formxml"] = formDoc.OuterXml;
