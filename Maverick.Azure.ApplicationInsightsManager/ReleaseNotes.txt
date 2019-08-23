@@ -1,9 +1,8 @@
 ﻿---- NEW FEATURES ----
-1. Added Reset & Help button to the ribbon
+None
 
 ---- UPDATES ----
-1. Link to creator's Twitter account
-2. Logo changes
+None
 
 ---- BUG FIXES ----
-1. Validation fixes
+1. Issue #3 and #4 fixes
