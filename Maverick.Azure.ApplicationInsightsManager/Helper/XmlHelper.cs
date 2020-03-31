@@ -14,28 +14,32 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
         private const string D365Insights_LOAD_FUNCTION_NAME = "D365AppInsights.startLogging";
         private const string D365Insights_SAVE_FUNCTION_NAME = "D365AppInsights.trackSaveTime";
 
+        private const string AI_Default_JS_FILE_NAME = "AI.Default.js";
+
         #endregion
 
-        public static XmlDocument GetModifiedFormXml(string formXml, string jscriptName, AppInsightsConfigs config)
+        public static XmlDocument GetModifiedFormXml(string formXml, string prefix, string jscriptName, AppInsightsConfigs config)
         {
             string D365Insights_CONFIG_PARAMS = @"{    
 	                ""enableDebug"": true,  
-                    ""disablePageviewTracking"": " + config.disablePageviewTracking + @",  
+                    ""disablePageviewTracking"": " + config.disablePageviewTracking.ToString().ToLower() + @",  
 	                ""percentLoggedPageview"": 100,  
-	                ""disablePageLoadTimeTracking"": " + config.disablePageLoadTimeTracking + @",  
+	                ""disablePageLoadTimeTracking"": " + config.disablePageLoadTimeTracking.ToString().ToLower() + @",  
 	                ""percentLoggedPageLoadTime"": 100,  
-	                ""disableExceptionTracking"": " + config.disableExceptionTracking + @",   
+	                ""disableExceptionTracking"": " + config.disableExceptionTracking.ToString().ToLower() + @",   
 	                ""percentLoggedException"": 100,  
-	                ""disableAjaxTracking"": " + config.disableAjaxTracking + @",  
+	                ""disableAjaxTracking"": " + config.disableAjaxTracking.ToString().ToLower() + @",  
 	                ""maxAjaxCallsPerView"": 500,  
-	                ""disableTraceTracking"": " + config.disableTraceTracking + @",   
+	                ""disableTraceTracking"": " + config.disableTraceTracking.ToString().ToLower() + @",   
 	                ""percentLoggedTrace"": 100,  
-	                ""disableDependencyTracking"": " + config.disableDependencyTracking + @",   
+	                ""disableDependencyTracking"": " + config.disableDependencyTracking.ToString().ToLower() + @",   
 	                ""percentLoggedDependency"": 100,  
-	                ""disableMetricTracking"": " + config.disableMetricTracking + @",   
+	                ""disableMetricTracking"": " + config.disableMetricTracking.ToString().ToLower() + @",   
 	                ""percentLoggedMetric"": 100,  
-	                ""disableEventTracking"": " + config.disableEventTracking + @",   
-	                ""percentLoggedEvent"": 100
+	                ""disableEventTracking"": " + config.disableEventTracking.ToString().ToLower() + @",   
+	                ""percentLoggedEvent"": 100,
+                    ""disablePageSaveTimeTracking"": " + config.disablePageSaveTimeTracking.ToString().ToLower() + @",   
+	                ""percentLoggedPageSaveTime"": 100
                     }";
 
             var formDoc = new XmlDocument();
@@ -60,10 +64,9 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
                 formNode.AppendChild(eventLibrary);
             }
 
-            //var jscriptName = string.Format("{0}{1}", prefix, schemaName);
-
             if (jscriptName != null)
             {
+                //var jscriptName = string.Format("{0}{1}", prefix, schemaName);
                 var libraryNode = formLibrariesNode.SelectSingleNode(string.Format("Library[@name = '{0}']", jscriptName));
 
                 if (libraryNode != null)
@@ -220,6 +223,38 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
                     {
                         savehandlersNode.AppendChild(savefunctionNode);
                     }
+                }
+            }
+
+            // Add Ai.Default script to Form
+            var jscriptAiDefaultName = string.Format("{0}{1}", prefix, AI_Default_JS_FILE_NAME);
+            var libraryAiDefaultNode = formLibrariesNode.SelectSingleNode(string.Format("Library[@name = '{0}']", jscriptAiDefaultName));
+            if (libraryAiDefaultNode != null)
+            {
+                // Do nothing
+            }
+            else
+            {
+                var nameAiDefaultAttribute = formDoc.CreateAttribute("name");
+                var libraryAiDefaultUniqueIdAttribute = formDoc.CreateAttribute("libraryUniqueId");
+
+                nameAiDefaultAttribute.Value = jscriptAiDefaultName;
+                libraryAiDefaultUniqueIdAttribute.Value = Guid.NewGuid().ToString("B");
+                libraryAiDefaultNode = formDoc.CreateElement("Library");
+
+                if (libraryAiDefaultNode.Attributes != null)
+                {
+                    libraryAiDefaultNode.Attributes.Append(nameAiDefaultAttribute);
+                    libraryAiDefaultNode.Attributes.Append(libraryAiDefaultUniqueIdAttribute);
+                }
+
+                if (formLibrariesNode.ChildNodes.Count > 0)
+                {
+                    formLibrariesNode.InsertBefore(libraryAiDefaultNode, formLibrariesNode.FirstChild);
+                }
+                else
+                {
+                    formLibrariesNode.AppendChild(libraryAiDefaultNode);
                 }
             }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPluginControl));
             this.tsbClose = new System.Windows.Forms.ToolStripButton();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -67,6 +68,7 @@
             this.pnlEntitiesSelection = new System.Windows.Forms.Panel();
             this.linklblSelectAll = new System.Windows.Forms.LinkLabel();
             this.gboxConfigs = new System.Windows.Forms.GroupBox();
+            this.cboxPageSaveTime = new System.Windows.Forms.CheckBox();
             this.cboxEvents = new System.Windows.Forms.CheckBox();
             this.cboxDependency = new System.Windows.Forms.CheckBox();
             this.cboxMetrics = new System.Windows.Forms.CheckBox();
@@ -77,6 +79,24 @@
             this.cboxPageView = new System.Windows.Forms.CheckBox();
             this.btnApplyPublish = new System.Windows.Forms.Button();
             this.linklblCreator = new System.Windows.Forms.LinkLabel();
+            this.gboxExamples = new System.Windows.Forms.GroupBox();
+            this.btnCopyTraces = new System.Windows.Forms.Button();
+            this.btnCopyDependencies = new System.Windows.Forms.Button();
+            this.btnCopyException = new System.Windows.Forms.Button();
+            this.btnCopyEvents = new System.Windows.Forms.Button();
+            this.btnCopyMetric = new System.Windows.Forms.Button();
+            this.lblDependencies = new System.Windows.Forms.Label();
+            this.lblDependenciesLabel = new System.Windows.Forms.Label();
+            this.lblExceptions = new System.Windows.Forms.Label();
+            this.lblExceptionsLabel = new System.Windows.Forms.Label();
+            this.lblTraces = new System.Windows.Forms.Label();
+            this.lblTracesLabel = new System.Windows.Forms.Label();
+            this.lblEvents = new System.Windows.Forms.Label();
+            this.lblEventsLabel = new System.Windows.Forms.Label();
+            this.lblMetrics = new System.Windows.Forms.Label();
+            this.lblMetricsLabel = new System.Windows.Forms.Label();
+            this.lblCopied = new System.Windows.Forms.Label();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.toolStripMenu.SuspendLayout();
             this.gboxSolutionManagement.SuspendLayout();
             this.gboxUseExisting.SuspendLayout();
@@ -84,6 +104,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvForms)).BeginInit();
             this.pnlEntitiesSelection.SuspendLayout();
             this.gboxConfigs.SuspendLayout();
+            this.gboxExamples.SuspendLayout();
             this.SuspendLayout();
             // 
             // tsbClose
@@ -299,6 +320,7 @@
             this.txtCreateWrSchemaName.Name = "txtCreateWrSchemaName";
             this.txtCreateWrSchemaName.Size = new System.Drawing.Size(181, 20);
             this.txtCreateWrSchemaName.TabIndex = 2;
+            this.txtCreateWrSchemaName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCreateWrSchemaName_KeyUp);
             // 
             // lblCreateSolutionPrefix
             // 
@@ -322,6 +344,8 @@
             this.dgvForms.AllowUserToAddRows = false;
             this.dgvForms.AllowUserToDeleteRows = false;
             this.dgvForms.AllowUserToResizeRows = false;
+            this.dgvForms.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvForms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvForms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Select,
@@ -333,7 +357,7 @@
             this.dgvForms.Location = new System.Drawing.Point(7, 57);
             this.dgvForms.Name = "dgvForms";
             this.dgvForms.RowHeadersVisible = false;
-            this.dgvForms.Size = new System.Drawing.Size(629, 442);
+            this.dgvForms.Size = new System.Drawing.Size(629, 445);
             this.dgvForms.TabIndex = 6;
             this.dgvForms.DataSourceChanged += new System.EventHandler(this.DgvForms_DataSourceChanged);
             // 
@@ -421,6 +445,8 @@
             // 
             // pnlEntitiesSelection
             // 
+            this.pnlEntitiesSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlEntitiesSelection.Controls.Add(this.linklblSelectAll);
             this.pnlEntitiesSelection.Controls.Add(this.gboxConfigs);
             this.pnlEntitiesSelection.Controls.Add(this.btnApplyPublish);
@@ -431,7 +457,7 @@
             this.pnlEntitiesSelection.Controls.Add(this.txtSearch);
             this.pnlEntitiesSelection.Location = new System.Drawing.Point(3, 145);
             this.pnlEntitiesSelection.Name = "pnlEntitiesSelection";
-            this.pnlEntitiesSelection.Size = new System.Drawing.Size(827, 647);
+            this.pnlEntitiesSelection.Size = new System.Drawing.Size(645, 650);
             this.pnlEntitiesSelection.TabIndex = 11;
             this.pnlEntitiesSelection.Visible = false;
             // 
@@ -448,6 +474,8 @@
             // 
             // gboxConfigs
             // 
+            this.gboxConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.gboxConfigs.Controls.Add(this.cboxPageSaveTime);
             this.gboxConfigs.Controls.Add(this.cboxEvents);
             this.gboxConfigs.Controls.Add(this.cboxDependency);
             this.gboxConfigs.Controls.Add(this.cboxMetrics);
@@ -458,10 +486,20 @@
             this.gboxConfigs.Controls.Add(this.cboxPageView);
             this.gboxConfigs.Location = new System.Drawing.Point(7, 505);
             this.gboxConfigs.Name = "gboxConfigs";
-            this.gboxConfigs.Size = new System.Drawing.Size(629, 90);
+            this.gboxConfigs.Size = new System.Drawing.Size(629, 93);
             this.gboxConfigs.TabIndex = 12;
             this.gboxConfigs.TabStop = false;
             this.gboxConfigs.Text = "Configurations";
+            // 
+            // cboxPageSaveTime
+            // 
+            this.cboxPageSaveTime.AutoSize = true;
+            this.cboxPageSaveTime.Location = new System.Drawing.Point(316, 66);
+            this.cboxPageSaveTime.Name = "cboxPageSaveTime";
+            this.cboxPageSaveTime.Size = new System.Drawing.Size(185, 17);
+            this.cboxPageSaveTime.TabIndex = 8;
+            this.cboxPageSaveTime.Text = "Disable Page SaveTime Tracking";
+            this.cboxPageSaveTime.UseVisualStyleBackColor = true;
             // 
             // cboxEvents
             // 
@@ -547,10 +585,11 @@
             // 
             // btnApplyPublish
             // 
+            this.btnApplyPublish.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnApplyPublish.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnApplyPublish.Image = ((System.Drawing.Image)(resources.GetObject("btnApplyPublish.Image")));
             this.btnApplyPublish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApplyPublish.Location = new System.Drawing.Point(7, 600);
+            this.btnApplyPublish.Location = new System.Drawing.Point(7, 603);
             this.btnApplyPublish.Name = "btnApplyPublish";
             this.btnApplyPublish.Size = new System.Drawing.Size(151, 44);
             this.btnApplyPublish.TabIndex = 11;
@@ -565,25 +604,260 @@
             this.linklblCreator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.linklblCreator.Image = ((System.Drawing.Image)(resources.GetObject("linklblCreator.Image")));
             this.linklblCreator.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.linklblCreator.Location = new System.Drawing.Point(911, 4);
+            this.linklblCreator.Location = new System.Drawing.Point(905, 4);
             this.linklblCreator.Name = "linklblCreator";
-            this.linklblCreator.Size = new System.Drawing.Size(154, 23);
+            this.linklblCreator.Size = new System.Drawing.Size(160, 23);
             this.linklblCreator.TabIndex = 12;
             this.linklblCreator.TabStop = true;
-            this.linklblCreator.Text = "by Danish (Danz-Maverick)";
+            this.linklblCreator.Text = "by Danish (Power Maverick)";
             this.linklblCreator.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.linklblCreator.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinklblCreator_LinkClicked);
+            // 
+            // gboxExamples
+            // 
+            this.gboxExamples.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gboxExamples.Controls.Add(this.btnCopyTraces);
+            this.gboxExamples.Controls.Add(this.btnCopyDependencies);
+            this.gboxExamples.Controls.Add(this.btnCopyException);
+            this.gboxExamples.Controls.Add(this.btnCopyEvents);
+            this.gboxExamples.Controls.Add(this.btnCopyMetric);
+            this.gboxExamples.Controls.Add(this.lblDependencies);
+            this.gboxExamples.Controls.Add(this.lblDependenciesLabel);
+            this.gboxExamples.Controls.Add(this.lblExceptions);
+            this.gboxExamples.Controls.Add(this.lblExceptionsLabel);
+            this.gboxExamples.Controls.Add(this.lblTraces);
+            this.gboxExamples.Controls.Add(this.lblTracesLabel);
+            this.gboxExamples.Controls.Add(this.lblEvents);
+            this.gboxExamples.Controls.Add(this.lblEventsLabel);
+            this.gboxExamples.Controls.Add(this.lblMetrics);
+            this.gboxExamples.Controls.Add(this.lblMetricsLabel);
+            this.gboxExamples.Location = new System.Drawing.Point(654, 145);
+            this.gboxExamples.Name = "gboxExamples";
+            this.gboxExamples.Size = new System.Drawing.Size(411, 650);
+            this.gboxExamples.TabIndex = 14;
+            this.gboxExamples.TabStop = false;
+            this.gboxExamples.Text = "Examples to use in your scripts";
+            this.gboxExamples.Visible = false;
+            // 
+            // btnCopyTraces
+            // 
+            this.btnCopyTraces.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyTraces.FlatAppearance.BorderSize = 0;
+            this.btnCopyTraces.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopyTraces.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyTraces.Image")));
+            this.btnCopyTraces.Location = new System.Drawing.Point(379, 145);
+            this.btnCopyTraces.Name = "btnCopyTraces";
+            this.btnCopyTraces.Size = new System.Drawing.Size(26, 23);
+            this.btnCopyTraces.TabIndex = 14;
+            this.btnCopyTraces.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCopyTraces.UseVisualStyleBackColor = true;
+            this.btnCopyTraces.Click += new System.EventHandler(this.btnCopyTraces_Click);
+            // 
+            // btnCopyDependencies
+            // 
+            this.btnCopyDependencies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyDependencies.FlatAppearance.BorderSize = 0;
+            this.btnCopyDependencies.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopyDependencies.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyDependencies.Image")));
+            this.btnCopyDependencies.Location = new System.Drawing.Point(379, 368);
+            this.btnCopyDependencies.Name = "btnCopyDependencies";
+            this.btnCopyDependencies.Size = new System.Drawing.Size(26, 23);
+            this.btnCopyDependencies.TabIndex = 13;
+            this.btnCopyDependencies.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCopyDependencies.UseVisualStyleBackColor = true;
+            this.btnCopyDependencies.Click += new System.EventHandler(this.btnCopyDependencies_Click);
+            // 
+            // btnCopyException
+            // 
+            this.btnCopyException.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyException.FlatAppearance.BorderSize = 0;
+            this.btnCopyException.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopyException.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyException.Image")));
+            this.btnCopyException.Location = new System.Drawing.Point(379, 212);
+            this.btnCopyException.Name = "btnCopyException";
+            this.btnCopyException.Size = new System.Drawing.Size(26, 23);
+            this.btnCopyException.TabIndex = 12;
+            this.btnCopyException.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCopyException.UseVisualStyleBackColor = true;
+            this.btnCopyException.Click += new System.EventHandler(this.btnCopyException_Click);
+            // 
+            // btnCopyEvents
+            // 
+            this.btnCopyEvents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyEvents.FlatAppearance.BorderSize = 0;
+            this.btnCopyEvents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopyEvents.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyEvents.Image")));
+            this.btnCopyEvents.Location = new System.Drawing.Point(379, 92);
+            this.btnCopyEvents.Name = "btnCopyEvents";
+            this.btnCopyEvents.Size = new System.Drawing.Size(26, 23);
+            this.btnCopyEvents.TabIndex = 11;
+            this.btnCopyEvents.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCopyEvents.UseVisualStyleBackColor = true;
+            this.btnCopyEvents.Click += new System.EventHandler(this.btnCopyEvents_Click);
+            // 
+            // btnCopyMetric
+            // 
+            this.btnCopyMetric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyMetric.FlatAppearance.BorderSize = 0;
+            this.btnCopyMetric.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopyMetric.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyMetric.Image")));
+            this.btnCopyMetric.Location = new System.Drawing.Point(379, 23);
+            this.btnCopyMetric.Name = "btnCopyMetric";
+            this.btnCopyMetric.Size = new System.Drawing.Size(26, 23);
+            this.btnCopyMetric.TabIndex = 10;
+            this.btnCopyMetric.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCopyMetric.UseVisualStyleBackColor = true;
+            this.btnCopyMetric.Click += new System.EventHandler(this.btnCopyMetric_Click);
+            // 
+            // lblDependencies
+            // 
+            this.lblDependencies.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDependencies.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDependencies.Location = new System.Drawing.Point(9, 391);
+            this.lblDependencies.Name = "lblDependencies";
+            this.lblDependencies.Size = new System.Drawing.Size(396, 32);
+            this.lblDependencies.TabIndex = 9;
+            this.lblDependencies.Text = "D365AppInsights.writeDependency(\"Test\", \"Some Method\", 100, true, 0);";
+            // 
+            // lblDependenciesLabel
+            // 
+            this.lblDependenciesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDependenciesLabel.AutoSize = true;
+            this.lblDependenciesLabel.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDependenciesLabel.Location = new System.Drawing.Point(6, 371);
+            this.lblDependenciesLabel.Name = "lblDependenciesLabel";
+            this.lblDependenciesLabel.Size = new System.Drawing.Size(110, 16);
+            this.lblDependenciesLabel.TabIndex = 8;
+            this.lblDependenciesLabel.Text = "Dependencies";
+            // 
+            // lblExceptions
+            // 
+            this.lblExceptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblExceptions.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExceptions.Location = new System.Drawing.Point(9, 235);
+            this.lblExceptions.Name = "lblExceptions";
+            this.lblExceptions.Size = new System.Drawing.Size(396, 129);
+            this.lblExceptions.TabIndex = 7;
+            this.lblExceptions.Text = "try {\r\n       doSomethingNotDefined();\r\n}\r\ncatch (e) {\r\n       D365AppInsights.wr" +
+    "iteException(e, \"ExceptionTest\", AI.SeverityLevel.Error, null, null);\r\n}";
+            // 
+            // lblExceptionsLabel
+            // 
+            this.lblExceptionsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblExceptionsLabel.AutoSize = true;
+            this.lblExceptionsLabel.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExceptionsLabel.Location = new System.Drawing.Point(6, 215);
+            this.lblExceptionsLabel.Name = "lblExceptionsLabel";
+            this.lblExceptionsLabel.Size = new System.Drawing.Size(86, 16);
+            this.lblExceptionsLabel.TabIndex = 6;
+            this.lblExceptionsLabel.Text = "Exceptions";
+            // 
+            // lblTraces
+            // 
+            this.lblTraces.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTraces.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTraces.Location = new System.Drawing.Point(9, 168);
+            this.lblTraces.Name = "lblTraces";
+            this.lblTraces.Size = new System.Drawing.Size(396, 32);
+            this.lblTraces.TabIndex = 5;
+            this.lblTraces.Text = "D365AppInsights.writeTrace(\"Test\", AI.SeverityLevel.Warning, { myProp: \"a value\" " +
+    "});";
+            // 
+            // lblTracesLabel
+            // 
+            this.lblTracesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTracesLabel.AutoSize = true;
+            this.lblTracesLabel.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTracesLabel.Location = new System.Drawing.Point(6, 148);
+            this.lblTracesLabel.Name = "lblTracesLabel";
+            this.lblTracesLabel.Size = new System.Drawing.Size(227, 16);
+            this.lblTracesLabel.TabIndex = 4;
+            this.lblTracesLabel.Text = "Traces and Custom Dimensions";
+            // 
+            // lblEvents
+            // 
+            this.lblEvents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEvents.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEvents.Location = new System.Drawing.Point(9, 115);
+            this.lblEvents.Name = "lblEvents";
+            this.lblEvents.Size = new System.Drawing.Size(396, 24);
+            this.lblEvents.TabIndex = 3;
+            this.lblEvents.Text = "D365AppInsights.writeEvent(\"Button Click\", null, { click: 1 });";
+            // 
+            // lblEventsLabel
+            // 
+            this.lblEventsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEventsLabel.AutoSize = true;
+            this.lblEventsLabel.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEventsLabel.Location = new System.Drawing.Point(6, 95);
+            this.lblEventsLabel.Name = "lblEventsLabel";
+            this.lblEventsLabel.Size = new System.Drawing.Size(253, 16);
+            this.lblEventsLabel.TabIndex = 2;
+            this.lblEventsLabel.Text = "Events and Custom Measurements";
+            // 
+            // lblMetrics
+            // 
+            this.lblMetrics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMetrics.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetrics.Location = new System.Drawing.Point(9, 46);
+            this.lblMetrics.Name = "lblMetrics";
+            this.lblMetrics.Size = new System.Drawing.Size(396, 40);
+            this.lblMetrics.TabIndex = 1;
+            this.lblMetrics.Text = "D365AppInsights.writeMetric(\"Custom Metric: Measurement\", 5, 1);\r\nD365AppInsights" +
+    ".writeMetric(\"Custom Metric: Aggregate\", 15, 3, 0, 30);";
+            // 
+            // lblMetricsLabel
+            // 
+            this.lblMetricsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMetricsLabel.AutoSize = true;
+            this.lblMetricsLabel.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMetricsLabel.Location = new System.Drawing.Point(6, 26);
+            this.lblMetricsLabel.Name = "lblMetricsLabel";
+            this.lblMetricsLabel.Size = new System.Drawing.Size(61, 16);
+            this.lblMetricsLabel.TabIndex = 0;
+            this.lblMetricsLabel.Text = "Metrics";
+            // 
+            // lblCopied
+            // 
+            this.lblCopied.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCopied.AutoSize = true;
+            this.lblCopied.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblCopied.ForeColor = System.Drawing.Color.White;
+            this.lblCopied.Location = new System.Drawing.Point(1019, 129);
+            this.lblCopied.Name = "lblCopied";
+            this.lblCopied.Size = new System.Drawing.Size(40, 13);
+            this.lblCopied.TabIndex = 15;
+            this.lblCopied.Text = "Copied";
+            this.lblCopied.Visible = false;
+            // 
+            // timer
+            // 
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // MainPluginControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblCopied);
+            this.Controls.Add(this.gboxExamples);
             this.Controls.Add(this.linklblCreator);
             this.Controls.Add(this.pnlEntitiesSelection);
             this.Controls.Add(this.gboxSolutionManagement);
             this.Controls.Add(this.toolStripMenu);
             this.Name = "MainPluginControl";
-            this.Size = new System.Drawing.Size(1068, 795);
+            this.Size = new System.Drawing.Size(1068, 798);
             this.OnCloseTool += new System.EventHandler(this.MainPluginControl_OnCloseTool);
             this.Load += new System.EventHandler(this.MainPluginControl_Load);
             this.toolStripMenu.ResumeLayout(false);
@@ -599,6 +873,8 @@
             this.pnlEntitiesSelection.PerformLayout();
             this.gboxConfigs.ResumeLayout(false);
             this.gboxConfigs.PerformLayout();
+            this.gboxExamples.ResumeLayout(false);
+            this.gboxExamples.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -654,5 +930,24 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.LinkLabel linklblCreator;
         private System.Windows.Forms.ToolStripButton tsbHelp;
+        private System.Windows.Forms.CheckBox cboxPageSaveTime;
+        private System.Windows.Forms.GroupBox gboxExamples;
+        private System.Windows.Forms.Label lblDependencies;
+        private System.Windows.Forms.Label lblDependenciesLabel;
+        private System.Windows.Forms.Label lblExceptions;
+        private System.Windows.Forms.Label lblExceptionsLabel;
+        private System.Windows.Forms.Label lblTraces;
+        private System.Windows.Forms.Label lblTracesLabel;
+        private System.Windows.Forms.Label lblEvents;
+        private System.Windows.Forms.Label lblEventsLabel;
+        private System.Windows.Forms.Label lblMetrics;
+        private System.Windows.Forms.Label lblMetricsLabel;
+        private System.Windows.Forms.Button btnCopyTraces;
+        private System.Windows.Forms.Button btnCopyDependencies;
+        private System.Windows.Forms.Button btnCopyException;
+        private System.Windows.Forms.Button btnCopyEvents;
+        private System.Windows.Forms.Button btnCopyMetric;
+        private System.Windows.Forms.Label lblCopied;
+        private System.Windows.Forms.Timer timer;
     }
 }

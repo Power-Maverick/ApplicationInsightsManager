@@ -1,8 +1,10 @@
 ﻿---- NEW FEATURES ----
-None
+1. New Icon
+2. Examples provided for different insights
+3. Copy function on examples
 
 ---- UPDATES ----
-None
+1. UI updated to scale according to form size
 
 ---- BUG FIXES ----
-1. Issue #3 and #4 fixes
+1. Fixed issue with AppInsights script

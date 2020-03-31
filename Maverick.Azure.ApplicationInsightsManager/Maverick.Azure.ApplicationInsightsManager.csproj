@@ -135,6 +135,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SealedClasses\AppInsightsConfigs.cs" />
+    <Compile Include="SealedClasses\AppParameter.cs" />
     <Compile Include="SealedClasses\ComboListItem.cs" />
     <Compile Include="SealedClasses\DataGridViewListItem.cs" />
     <Compile Include="SealedClasses\ExistingWebResource.cs" />
@@ -160,10 +161,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReleaseNotes.txt" />
-    <Content Include="Scripts\AI.Init.js">
+    <Content Include="Scripts\D365Insights.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\D365Insights.js">
+    <Content Include="Scripts\AI.Default.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

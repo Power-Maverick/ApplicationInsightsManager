@@ -16,6 +16,7 @@ using Maverick.Azure.ApplicationInsightsManager.Helper;
 using Microsoft.Xrm.Sdk.Metadata;
 using System.Collections.ObjectModel;
 using Microsoft.Xrm.Sdk.Messages;
+using Maverick.Azure.ApplicationInsightsManager.SealedClasses;
 
 namespace Maverick.Azure.ApplicationInsightsManager
 {
@@ -38,8 +39,8 @@ namespace Maverick.Azure.ApplicationInsightsManager
 
         #region Public Variables
         public string RepositoryName => "ApplicationInsightsManager";
-        public string UserName => "Danz-maveRICK";
-        public string HelpUrl => "https://github.com/Danz-maveRICK/ApplicationInsightsManager/blob/master/README.md";
+        public string UserName => "Power-Maverick";
+        public string HelpUrl => "https://github.com/Power-Maverick/ApplicationInsightsManager/blob/master/README.md";
         public string DonationDescription => "Keeps the ball rolling and motivates in making awesome tools.";
         public string EmailAccount => "danz@techgeek.co.in";
         #endregion
@@ -137,7 +138,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
             });
         }
 
-        private void CreateAndAddWebResourceToForms(string jscriptName)
+        private void CreateAndAddWebResourceToForms(AppParameter appParameter)
         {
             WorkAsync(new WorkAsyncInfo
             {
@@ -160,14 +161,14 @@ namespace Maverick.Azure.ApplicationInsightsManager
                         var result = args.Result as CreateResponse;
                         if (result != null)
                         {
-                            AddWebResourceToForms(jscriptName);
+                            AddWebResourceToForms(new AppParameter() { prefix = appParameter.prefix, jscript = appParameter.jscript });
                         }
                     }
                 }
             });
         }
 
-        private void AddWebResourceToForms(string jscriptName)
+        private void AddWebResourceToForms(AppParameter appParameter)
         {
             WorkAsync(new WorkAsyncInfo
             {
@@ -188,6 +189,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     config.disableMetricTracking = cboxMetrics.Checked;
                     config.disableDependencyTracking = cboxDependency.Checked;
                     config.disableEventTracking = cboxEvents.Checked;
+                    config.disablePageSaveTimeTracking = cboxPageSaveTime.Checked;
 
                     // Add web resource to checked rows
                     foreach (var row in checkedRows)
@@ -196,7 +198,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
                         var formEntity = _formsCache.FirstOrDefault(f => f.Id == formId);
                         var formXml = formEntity.GetAttributeValue<string>("formxml");
 
-                        MetadataHelper.AddJavascriptLibraryToForm(Service, formId, formXml, jscriptName, config);
+                        MetadataHelper.AddJavascriptLibraryToForm(Service, formId, formXml, appParameter.prefix, appParameter.jscript, config);
 
                         row.Cells["AppInsightsExists"].Value = true;
                         row.Cells[0].Value = false;
@@ -234,6 +236,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
                     else
                     {
                         RefreshDataGridView();
+                        MessageBox.Show($"Changes applied to selected forms.");
                     }
                 }
             });
@@ -339,6 +342,14 @@ namespace Maverick.Azure.ApplicationInsightsManager
             cboxMetrics.Checked = false;
             cboxDependency.Checked = false;
             cboxEvents.Checked = false;
+            gboxExamples.Visible = false;
+        }
+
+        private void CopyExample(string copyText)
+        {
+            lblCopied.Visible = true;
+            timer.Start();
+            Clipboard.SetText(copyText);
         }
 
         #endregion
@@ -419,6 +430,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
             pnlEntitiesSelection.Visible = true;
             lblInstrumentationKey.Visible = true;
             txtInstrumentationKey.Visible = true;
+            gboxExamples.Visible = true;
             selection = WebResourceOption.Create;
 
             ExecuteMethod(LoadForms);
@@ -431,6 +443,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
             pnlEntitiesSelection.Visible = true;
             lblInstrumentationKey.Visible = false;
             txtInstrumentationKey.Visible = false;
+            gboxExamples.Visible = true;
             selection = WebResourceOption.UseExisting;
 
             ExecuteMethod(LoadForms);
@@ -489,13 +502,13 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 {
                     jscriptName = string.Format("{0}{1}", lblCreateSolutionPrefix.Text, txtCreateWrSchemaName.Text);
                     // Create a Web Resource and add it to the solution
-                    ExecuteMethod(CreateAndAddWebResourceToForms, jscriptName);
+                    ExecuteMethod(CreateAndAddWebResourceToForms, new AppParameter() { prefix=lblCreateSolutionPrefix.Text, jscript = jscriptName });
                 }
                 else if (selection == WebResourceOption.UseExisting)
                 {
                     jscriptName = ((ExistingWebResource)cmbExistingWebResource.SelectedValue).Name;
                     // Create a Web Resource and add it to the solution
-                    ExecuteMethod(AddWebResourceToForms, jscriptName);
+                    ExecuteMethod(AddWebResourceToForms, new AppParameter() { prefix = lblCreateSolutionPrefix.Text, jscript = jscriptName });
                 }
             }
             else
@@ -534,7 +547,43 @@ namespace Maverick.Azure.ApplicationInsightsManager
 
         private void TsbHelp_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/Danz-maveRICK/ApplicationInsightsManager/wiki");
+            System.Diagnostics.Process.Start("https://github.com/Power-Maverick/ApplicationInsightsManager/wiki");
+        }
+
+        private void txtCreateWrSchemaName_KeyUp(object sender, KeyEventArgs e)
+        {
+            txtCreateWrDisplayName.Text = txtCreateWrSchemaName.Text;
+        }
+
+        private void btnCopyMetric_Click(object sender, EventArgs e)
+        {
+            CopyExample(lblMetrics.Text);
+        }
+
+        private void btnCopyEvents_Click(object sender, EventArgs e)
+        {
+            CopyExample(lblEvents.Text);
+        }
+
+        private void btnCopyTraces_Click(object sender, EventArgs e)
+        {
+            CopyExample(lblTraces.Text);
+        }
+
+        private void btnCopyException_Click(object sender, EventArgs e)
+        {
+            CopyExample(lblExceptions.Text);
+        }
+
+        private void btnCopyDependencies_Click(object sender, EventArgs e)
+        {
+            CopyExample(lblDependencies.Text);
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            lblCopied.Visible = false;
+            timer.Stop();
         }
     }
 }

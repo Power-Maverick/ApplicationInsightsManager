@@ -16,5 +16,6 @@ namespace Maverick.Azure.ApplicationInsightsManager
         public bool disableDependencyTracking { get; set; }
         public bool disableMetricTracking { get; set; }
         public bool disableEventTracking { get; set; }
+        public bool disablePageSaveTimeTracking { get; set; }
     }
 }

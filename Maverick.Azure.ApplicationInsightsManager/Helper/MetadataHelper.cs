@@ -88,6 +88,8 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
 
         public static CreateResponse CreateWebResource(IOrganizationService orgService, string solutionUniqueName, string displayName, string schemaName, string prefix, string instrumentationKey)
         {
+            /*
+            // AI.Init file creation
             const string AI_INIT_JS = "AI.Init.js";
             // Check if AI.Init.js already exists
             Guid aiWebResourceId = Guid.Empty;
@@ -121,9 +123,45 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
                 CreateResponse aiResponse = (CreateResponse)orgService.Execute(aiRequest);
                 aiWebResourceId = aiResponse.id;
             }
+            */
+
+            // AI.Default file creation
+            const string AI_DEFAULT_JS = "AI.Default.js";
+            // Check if AI.Default.js already exists
+            Guid aiDefaultWebResourceId = Guid.Empty;
+            QueryExpression qeAiDefaultWr = new QueryExpression("webresource");
+            qeAiDefaultWr.Criteria.AddCondition("name", ConditionOperator.Equal, string.Format("{0}{1}", prefix, AI_DEFAULT_JS));
+            EntityCollection ecAiDefaultWr = orgService.RetrieveMultiple(qeAiDefaultWr);
+            if (ecAiDefaultWr != null && ecAiDefaultWr.Entities != null && ecAiDefaultWr.Entities.Count > 0)
+            {
+                aiDefaultWebResourceId = ecAiDefaultWr.Entities[0].Id;
+            }
+
+            // Create only if AI.Default.js does not exists
+            if (aiDefaultWebResourceId == Guid.Empty)
+            {
+                // Create AI.Default.js file
+                Entity aiWebResource = new Entity("webresource");
+                aiWebResource.Attributes.Add("name", string.Format("{0}{1}", prefix, AI_DEFAULT_JS));
+                aiWebResource.Attributes.Add("displayname", AI_DEFAULT_JS);
+                aiWebResource.Attributes.Add("content", FileHelper.GetAiDefaultFileContents(instrumentationKey));
+                aiWebResource.Attributes.Add("description", "Azure Application Insights Default script.");
+                aiWebResource.Attributes.Add("webresourcetype", new OptionSetValue(3));// 3 = JScript
+
+                // Using CreateRequest because we want to add an optional parameter
+                CreateRequest aiRequest = new CreateRequest
+                {
+                    Target = aiWebResource
+                };
+                // Set the SolutionUniqueName optional parameter so the Web Resources will be created in the context of a specific solution.
+                aiRequest.Parameters.Add("SolutionUniqueName", solutionUniqueName);
+
+                CreateResponse aiResponse = (CreateResponse)orgService.Execute(aiRequest);
+                aiDefaultWebResourceId = aiResponse.id;
+            }
 
             // Create D365Insights.js file
-            var d365InsightsDependencyXml = @"<Dependencies><Dependency componentType=""WebResource""><Library name=""" + string.Format("{0}{1}", prefix, AI_INIT_JS) + @""" displayName=""" + AI_INIT_JS + @""" languagecode="""" description=""Azure Application Insights initializer script."" libraryUniqueId=""{" + aiWebResourceId + @"}""/></Dependency></Dependencies>";
+            //var d365InsightsDependencyXml = @"<Dependencies><Dependency componentType=""WebResource""><Library name=""" + string.Format("{0}{1}", prefix, AI_INIT_JS) + @""" displayName=""" + AI_INIT_JS + @""" languagecode="""" description=""Azure Application Insights initializer script."" libraryUniqueId=""{" + aiWebResourceId + @"}""/></Dependency></Dependencies>";
 
             Entity d365InsightsWebResource = new Entity("webresource");
             d365InsightsWebResource.Attributes.Add("name", string.Format("{0}{1}", prefix, schemaName));
@@ -131,7 +169,7 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
             d365InsightsWebResource.Attributes.Add("content", FileHelper.GetD365InsightsFileContents(instrumentationKey));
             d365InsightsWebResource.Attributes.Add("description", "Javascript to trace the client insights in Azure Application Insights.");
             d365InsightsWebResource.Attributes.Add("webresourcetype", new OptionSetValue(3));// 3 = JScript
-            d365InsightsWebResource.Attributes.Add("dependencyxml", d365InsightsDependencyXml);
+            //d365InsightsWebResource.Attributes.Add("dependencyxml", d365InsightsDependencyXml);
 
             // Using CreateRequest because we want to add an optional parameter
             CreateRequest d365InsightsRequest = new CreateRequest
@@ -146,9 +184,9 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
             return d365InsightsResponse;
         }
 
-        public static void AddJavascriptLibraryToForm(IOrganizationService orgService, Guid formId, string formXml, string jscriptName, AppInsightsConfigs config)
+        public static void AddJavascriptLibraryToForm(IOrganizationService orgService, Guid formId, string formXml, string prefix, string jscriptName, AppInsightsConfigs config)
         {
-            XmlDocument formDoc = XmlHelper.GetModifiedFormXml(formXml, jscriptName, config);
+            XmlDocument formDoc = XmlHelper.GetModifiedFormXml(formXml,prefix, jscriptName, config);
 
             Entity systemForm = new Entity("systemform", formId);
             systemForm["formxml"] = formDoc.OuterXml;

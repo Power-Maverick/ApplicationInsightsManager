@@ -11,6 +11,7 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
     {
         private const string D365Insights_JS_FILE_LOCATION = "\\script\\D365Insights.js";
         private const string AI_Init_JS_FILE_LOCATION = "\\script\\AI.Init.js";
+        private const string AI_Default_JS_FILE_LOCATION = "\\script\\AI.Default.js";
 
         /// <summary>
         /// Gets the encoded contents for D365Insights.js file
@@ -43,6 +44,28 @@ namespace Maverick.Azure.ApplicationInsightsManager.Helper
             string scriptString = string.Empty;
 
             var fullPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "\\" + AI_Init_JS_FILE_LOCATION;
+
+            if (File.Exists(fullPath))
+            {
+                using (TextReader tr = new StreamReader(fullPath))
+                {
+                    scriptString = tr.ReadToEnd();
+                    scriptString = scriptString.Replace("AIInstrumentationKeyForReplace", instrumentationKey);
+                }
+            }
+
+            return Base64Encode(scriptString);
+        }
+
+        /// <summary>
+        /// Gets the encoded contents for AI.Default.js file
+        /// </summary>
+        /// <returns></returns>
+        static public string GetAiDefaultFileContents(string instrumentationKey)
+        {
+            string scriptString = string.Empty;
+
+            var fullPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "\\" + AI_Default_JS_FILE_LOCATION;
 
             if (File.Exists(fullPath))
             {
