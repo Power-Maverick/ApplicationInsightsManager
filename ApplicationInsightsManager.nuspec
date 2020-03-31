@@ -22,6 +22,6 @@
   <files>
     <file src="ApplicationInsightsManager\bin\Release\Maverick.Azure.ApplicationInsightsManager.dll" target="lib\net462\Plugins" />
     <file src="ApplicationInsightsManager\bin\Release\Scripts\D365Insights.js" target="lib\net462\Plugins\Maverick.Azure.ApplicationInsightsManager\script" />
-    <file src="ApplicationInsightsManager\bin\Release\Scripts\AI.Init.js" target="lib\net462\Plugins\Maverick.Azure.ApplicationInsightsManager\script" />
+    <file src="ApplicationInsightsManager\bin\Release\Scripts\AI.Default.js" target="lib\net462\Plugins\Maverick.Azure.ApplicationInsightsManager\script" />
   </files>
 </package>
