@@ -19,7 +19,9 @@ function Update-AssemblyInfoVersionFile
 	$buildMonth = $splitted[0].Substring(4,2)
 	$buildDate = $splitted[0].Substring(6,2)
     }
-      
+    
+    Write-Verbose "builds: $buildIncrementalNumber, $buildYear, $buildMonth, $buildDate" -Verbose
+    
     $SrcPath = $env:BUILD_SOURCESDIRECTORY
     Write-Verbose "Executing Update-AssemblyInfoVersionFiles in path $SrcPath for product version Version $productVersion"  -Verbose
  
