@@ -17,49 +17,65 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: 'NuGet Installer'
   inputs:
     versionSpec: 
     checkLatest: true
 
 - task: NuGetCommand@2
+  displayName: 'NuGet Restore'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: PowerShell@2
+  displayName: 'Versioning'
   inputs:
     filePath: 'assemblyversion.ps1'
     arguments: '$(buildNumber)'
 
 - task: VSBuild@1
+  displayName: 'Build'
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: 'Test'
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: CopyFiles@2
+  displayName: 'Copy Release Notes'
   inputs:
     SourceFolder: '$(build.sourcesDirectory)/Maverick.Azure.ApplicationInsightsManager'
     Contents: 'ReleaseNotes.txt'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: CopyFiles@2
+  displayName: 'Copy nuspec'
   inputs:
     SourceFolder: '$(build.sourcesDirectory)'
     Contents: 'ApplicationInsightsManager.nuspec'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: CopyFiles@2
+  displayName: 'Copy .dll'
   inputs:
     SourceFolder: '$(build.sourcesDirectory)/Maverick.Azure.ApplicationInsightsManager/bin/Release'
-    Contents: '**'
+    Contents: '**.dll'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/ApplicationInsightsManager/bin/Release'
 
+- task: CopyFiles@2
+  displayName: 'Copy .js'
+  inputs:
+    SourceFolder: '$(build.sourcesDirectory)/Maverick.Azure.ApplicationInsightsManager/bin/Release'
+    Contents: '**.js'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/ApplicationInsightsManager/bin/Release/Scripts'
+
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'buildfiles'
