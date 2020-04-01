@@ -5,15 +5,15 @@
     <version>1.0.0</version>
     <title>Application Insights Manager</title>
     <authors>Danish Naglekar</authors>
-    <owners>Danz-maveRICK</owners>
-    <projectUrl>https://github.com/Danz-maveRICK/ApplicationInsightsManager</projectUrl>
+    <owners>Power-Maverick</owners>
+    <projectUrl>https://github.com/Power-Maverick/ApplicationInsightsManager</projectUrl>
     <iconUrl>https://danishnaglekar.files.wordpress.com/2018/06/cropped-d-logos1.jpg</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/Danz-maveRICK/ApplicationInsightsManager/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/Power-Maverick/ApplicationInsightsManager/blob/master/LICENSE</licenseUrl>
     <description>Create a new jscript file to track client insights by integrating it with Azure Application Insights. Bulk update all the required forms with the App Insights jscript.</description>
     <summary>Create a new jscript file to track client insights by integrating it with Azure Application Insights. Bulk update all the required forms with the App Insights jscript.</summary>
     <releaseNotes>$releasenotes$</releaseNotes>
-    <copyright>Copyright © Danish Naglekar</copyright>
+    <copyright>Copyright © Danish N | Power Maverick</copyright>
     <tags>XrmToolBox Plugins, Application Insights, Azure</tags>
     <dependencies>
       <dependency id="XrmToolBox" version="1.2018.6.24" />
@@ -22,6 +22,6 @@
   <files>
     <file src="ApplicationInsightsManager\bin\Release\Maverick.Azure.ApplicationInsightsManager.dll" target="lib\net462\Plugins" />
     <file src="ApplicationInsightsManager\bin\Release\Scripts\D365Insights.js" target="lib\net462\Plugins\Maverick.Azure.ApplicationInsightsManager\script" />
-    <file src="ApplicationInsightsManager\bin\Release\Scripts\AI.Init.js" target="lib\net462\Plugins\Maverick.Azure.ApplicationInsightsManager\script" />
+    <file src="ApplicationInsightsManager\bin\Release\Scripts\AI.Default.js" target="lib\net462\Plugins\Maverick.Azure.ApplicationInsightsManager\script" />
   </files>
 </package>
