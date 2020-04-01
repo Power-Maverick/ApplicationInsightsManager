@@ -63,8 +63,13 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 Message = "Loading Solutions...",
                 Work = (worker, args) =>
                 {
+                    var start = DateTime.Now;
+
                     args.Result = MetadataHelper.RetrieveSolutions(Service);
 
+                    var end = DateTime.Now;
+                    var duration = end - start;
+                    LogEventMetrics("LoadSolutions", "ProcessingTime", duration.TotalMilliseconds);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -106,7 +111,13 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 Message = "Loading Forms...",
                 Work = (w, e) =>
                 {
+                    var start = DateTime.Now;
+
                     e.Result = MetadataHelper.GetAllForms(Service);
+
+                    var end = DateTime.Now;
+                    var duration = end - start;
+                    LogEventMetrics("LoadForms", "ProcessingTime", duration.TotalMilliseconds);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -145,10 +156,16 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 Message = "Creating Web Resource...",
                 Work = (w, e) =>
                 {
+                    var start = DateTime.Now;
+
                     ComboListItem selectedSolution = (ComboListItem)cboxSolutions.SelectedItem;
                     var solutionUniqueName = selectedSolution.MetaData.GetAttributeValue<string>("uniquename");
 
                     e.Result = MetadataHelper.CreateWebResource(Service, solutionUniqueName, txtCreateWrDisplayName.Text, txtCreateWrSchemaName.Text, lblCreateSolutionPrefix.Text, txtInstrumentationKey.Text);
+
+                    var end = DateTime.Now;
+                    var duration = end - start;
+                    LogEventMetrics("Create WebResources", "ProcessingTime", duration.TotalMilliseconds);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -175,6 +192,8 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 Message = "Adding Application Insights Web Resources to Forms...",
                 Work = (w, e) =>
                 {
+                    var start = DateTime.Now;
+
                     // Get checked rows
                     var checkedRows = from DataGridViewRow r in dgvForms.Rows
                                       where Convert.ToBoolean(r.Cells[0].Value) == true
@@ -203,6 +222,10 @@ namespace Maverick.Azure.ApplicationInsightsManager
                         row.Cells["AppInsightsExists"].Value = true;
                         row.Cells[0].Value = false;
                     }
+
+                    var end = DateTime.Now;
+                    var duration = end - start;
+                    LogEventMetrics("Adding Web Resources", "ProcessingTime", duration.TotalMilliseconds);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -225,7 +248,13 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 Message = "Publishing Changes...",
                 Work = (w, e) =>
                 {
+                    var start = DateTime.Now;
+
                     MetadataHelper.PublishSystemForm(Service);
+
+                    var end = DateTime.Now;
+                    var duration = end - start;
+                    LogEventMetrics("Publish", "ProcessingTime", duration.TotalMilliseconds);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -271,7 +300,13 @@ namespace Maverick.Azure.ApplicationInsightsManager
                 Message = "Loading existing Web Resources...",
                 Work = (w, e) =>
                 {
+                    var start = DateTime.Now;
+
                     e.Result = MetadataHelper.GetWebResources(Service);
+
+                    var end = DateTime.Now;
+                    var duration = end - start;
+                    LogEventMetrics("Load WebResources", "ProcessingTime", duration.TotalMilliseconds);
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -352,6 +387,26 @@ namespace Maverick.Azure.ApplicationInsightsManager
             Clipboard.SetText(copyText);
         }
 
+        private void LogEvent(string eventName)
+        {
+            Telemetry.TrackEvent(eventName);
+        }
+
+        private void LogEventMetrics(string eventName, string metricName, double metric)
+        {
+            var metrics = new Dictionary<string, double>
+            {
+              { metricName, metric }
+            };
+
+            Telemetry.TrackEvent(eventName, null, metrics);
+        }
+
+        private void LogException(Exception ex)
+        {
+            Telemetry.TrackException(ex);
+        }
+
         #endregion
 
         public MainPluginControl()
@@ -362,6 +417,7 @@ namespace Maverick.Azure.ApplicationInsightsManager
         private void MainPluginControl_Load(object sender, EventArgs e)
         {
             //ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
+            var start = DateTime.Now;
 
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -374,10 +430,15 @@ namespace Maverick.Azure.ApplicationInsightsManager
             {
                 LogInfo("Settings found and loaded");
             }
+
+            var stop = DateTime.Now;
+            var duration = stop - start;
+            LogEventMetrics("Load", "LoadTime", duration.TotalMilliseconds);
         }
 
         private void tsbClose_Click(object sender, EventArgs e)
         {
+            LogEvent("Close");
             CloseTool();
         }
 
